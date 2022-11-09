@@ -156,8 +156,8 @@ const addAppointmentMutation = {
               ? clientPhoneNumber[0]
               : process.env.TWILIO_TEST_TEXT_NUMBER,
         })
-        .then((message) => console.log(message.sid))
-        .catch((err) => console.log(err));
+        .then((message) => console.log("message id", message.sid))
+        .catch((err) => console.log("error", err));
     };
 
     const auth = context.isAuth;
@@ -177,12 +177,13 @@ const addAppointmentMutation = {
     }
 
     let transporter = nodemailer.createTransport({
-      host: "smtp.mail.yahoo.com",
-      service: "yahoo",
+      host: process.env.GLOW_LABS_EMAIL_HOST, // "smtp-relay.sendinblue.com",
+      //service: "yahoo",
       secure: false,
+      port: process.env.GLOW_LABS_EMAIL_PORT, // 587,
       auth: {
-        user: process.env.GLOW_LABS_EMAIL,
-        pass: process.env.GLOW_LABS_EMAIL_APP_PASSWORD,
+        user: process.env.GLOW_LABS_EMAIL,//"letpat15@yahoo.com",
+        pass: process.env.GLOW_LABS_EMAIL_APP_PASSWORD//"cHtRxE29qVbhrZOK",
       },
       debug: false,
       logger: true,
@@ -255,6 +256,7 @@ const addAppointmentMutation = {
       createNotificationFunction(newNotification, staff);
 
     if (!foundClient) {
+
       client = new Client({
         _id: new mongoose.Types.ObjectId(),
         firstName: args.client[0].firstName,
@@ -470,7 +472,7 @@ const addAppointmentMutation = {
         .then(async (finalTemplate) => {
           await transporter.sendMail({
             from: process.env.GLOW_LABS_EMAIL,
-            to: args.client[0].email,
+            to: client_res.email,
             subject: "Your Glow Labs Appointment",
             html: finalTemplate,
           });
@@ -622,8 +624,8 @@ const addAppointmentMutation = {
         })
         .then(async (finalTemplate) => {
           await transporter.sendMail({
-            from: process.env.GLOW_LABS_EMAIL,
-            to: args.client[0].email,
+            from:  process.env.GLOW_LABS_EMAIL,
+            to: client.email,
             subject: "Your Glow Labs Appointment",
             html: finalTemplate,
           });

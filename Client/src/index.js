@@ -163,8 +163,10 @@ const TermsAndConditions = React.lazy(() =>
   import("./components/privacy/TermsAndConditions")
 );
 
-require("dotenv").config();
+// require("dotenv").config();
 require("intersection-observer");
+window.Buffer = require("buffer/").Buffer; 
+
 
 smoothscroll.polyfill();
 

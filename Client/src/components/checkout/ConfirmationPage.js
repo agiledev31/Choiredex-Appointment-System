@@ -217,6 +217,10 @@ const ConfirmationPage = (props) => {
 
   const handleSubmitBooking = (e) => {
     e.preventDefault();
+    console.log("handle submit booking")
+    console.log("treatmentsArray", treatmentsArr)
+    console.log("addOns", addOnsArr)
+    console.log("variablesModel", variablesModel)
 
     if (!finalBookButtonActive) {
       dispatch(ACTION_FINAL_BOOK_BUTTON_ACTIVE());

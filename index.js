@@ -810,10 +810,12 @@ app.get("/api/auth/facebook/callback", (req, res, next) => {
 });
 
 // Connect to MongoDB with Mongoose
+// console.log(`mongodb://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_HOSTNAME}:27017/glowlabsdb?authMechanism=DEFAULT&authSource=admin&retryWrites=true&w=majority`)
 mongoose
   .connect(
-    `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@glowlabs-qo7rk.mongodb.net/test?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
+    `mongodb://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_HOSTNAME}/glowlabsdb`,
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false } 
+    
   )
   .then(() => {
     console.log("Connected to MongoDB");

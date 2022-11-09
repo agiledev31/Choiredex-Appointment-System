@@ -40,6 +40,9 @@ import ACTION_TOTAL_DURATION from "../../../actions/TotalDuration/ACTION_TOTAL_D
 import ACTION_AVAILABILITY_PAGE_OPENED from "../../../actions/InCart/CartPageOpened/ACTION_AVAILABILITY_PAGE_OPENED";
 import ACTION_PAYMENT_INFO_PAGE_OPENED from "../../../actions/InCart/CartPageOpened/ACTION_PAYMENT_INFO_PAGE_OPENED";
 import ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED from "../../../actions/InCart/CartPageOpened/ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED";
+
+import ACTION_CONFIRMATION_PAGE_OPENED from "../../../actions/InCart/CartPageOpened/ACTION_CONFIRMATION_PAGE_OPENED";
+
 import "./TimePreference.css";
 // Minified Bootstrap CSS file (for Collapse feature)
 import "../../../bootstrap.min.css";
@@ -1514,7 +1517,8 @@ const TimePreference = (props) => {
                   return "/";
                 } else {
                   if (userAuthenticated) {
-                    return "/paymentinfo";
+                    // return "/paymentinfo"; // disable payment
+                    return "/checkout/confirmation";
                   } else {
                     return "/checkout";
                   }
@@ -1524,7 +1528,8 @@ const TimePreference = (props) => {
                   return "/";
                 } else {
                   if (userAuthenticated) {
-                    return "/paymentinfo";
+                    // return "/paymentinfo"; // disable payment
+                    return "/checkout/confirmation";
                   } else {
                     return "/checkout";
                   }
@@ -1547,14 +1552,16 @@ const TimePreference = (props) => {
                 transition: "background 0.5s ease, color 0.5s ease",
               }}
               onClick={() => {
-                if (userAuthenticated) {
-                  dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
-                } else {
-                  dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
-                }
+                // if (userAuthenticated) {
+                //   dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+                // } else {
+                //   dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
+                // }
+                dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
               }}
             >
-              <p>Continue Checkout</p>
+              {/* <p>Continue Checkout</p> */}
+              <p>Continue</p>
             </div>
           </Link>
           <Link
