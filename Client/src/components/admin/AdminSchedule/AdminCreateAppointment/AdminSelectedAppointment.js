@@ -473,6 +473,14 @@ const AdminSelectedAppointment = React.forwardRef((props, ref) => {
                     </p>
                   </div>
                 </div>
+                <div className="selected_appointment_meeting_link_container">
+                  <a 
+                    className="cancel_appointment_button meeting_link_button"
+                    href="https://meet.jit.si/gdfgasdfsdfasdasdasdfasdfasfasdasa" target="_blank"
+                  >
+                    Join to the Meeting
+                  </a>
+                </div>
                 <div className="selected_appointments_bottom_buttons_container">
                   {moment(
                     allAdminAppointments.filter(

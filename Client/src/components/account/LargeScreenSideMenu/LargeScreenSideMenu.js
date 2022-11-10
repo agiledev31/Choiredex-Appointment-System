@@ -628,24 +628,25 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
             </div>
           )}{" "}
           {getEmployeeData ? (
-            <div
-              className="large_screen_side_menu_item_container"
-              onClick={handleAdminResetNotifications}
-            >
-              <Link className="large_screen_side_menu_item" to="/admin/staff">
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("staff") ? 1 : 0,
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faBriefcase}
-                  className="large_screen_side_menu_item_icon"
-                />
-                <h2>Staff</h2>
-              </Link>
-            </div>
+            null
+            // <div
+            //   className="large_screen_side_menu_item_container"
+            //   onClick={handleAdminResetNotifications}
+            // >
+            //   <Link className="large_screen_side_menu_item" to="/admin/staff">
+            //     <div
+            //       className="large_screen_side_menu_item_selected_border"
+            //       style={{
+            //         opacity: location.pathname.includes("staff") ? 1 : 0,
+            //       }}
+            //     />
+            //     <FontAwesomeIcon
+            //       icon={faBriefcase}
+            //       className="large_screen_side_menu_item_icon"
+            //     />
+            //     <h2>Staff</h2>
+            //   </Link>
+            // </div>
           ) : (
             <div className="large_screen_side_menu_item_container">
               <Link
@@ -698,27 +699,28 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
               <div className="large_screen_side_menu_underline_separator" />
             </>
           ) : (
-            <div className="large_screen_side_menu_item_container">
-              <Link
-                className="large_screen_side_menu_item"
-                to={`/account/clientprofile/consentform/${consentFormLastPageOpened}`}
-              >
-                <div
-                  className="large_screen_side_menu_item_selected_border"
-                  style={{
-                    opacity: location.pathname.includes("consentform") ? 1 : 0,
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faFileSignature}
-                  className="large_screen_side_menu_item_icon"
-                />
-                <h2>Consent Form</h2>
-              </Link>
-            </div>
+            null
+            // <div className="large_screen_side_menu_item_container">
+            //   <Link
+            //     className="large_screen_side_menu_item"
+            //     to={`/account/clientprofile/consentform/${consentFormLastPageOpened}`}
+            //   >
+            //     <div
+            //       className="large_screen_side_menu_item_selected_border"
+            //       style={{
+            //         opacity: location.pathname.includes("consentform") ? 1 : 0,
+            //       }}
+            //     />
+            //     <FontAwesomeIcon
+            //       icon={faFileSignature}
+            //       className="large_screen_side_menu_item_icon"
+            //     />
+            //     <h2>Consent Form</h2>
+            //   </Link>
+            // </div>
           )}
-          {renderDownloadConsentFormButton()}
-          {getEmployeeData ? null : (
+          {/* {renderDownloadConsentFormButton()} */}
+          {/* {getEmployeeData ? null : (
             <div className="large_screen_side_menu_extras_section">
               <div className="large_screen_side_menu_underline_separator" />
               <div className="large_screen_side_menu_item_container">
@@ -787,7 +789,7 @@ const LargeScreenSideMenu = React.forwardRef((props, ref) => {
                 </Link>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       )}
       {guestConsentFormAccessToken ? null : (

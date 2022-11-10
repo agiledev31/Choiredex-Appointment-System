@@ -129,7 +129,7 @@ const addAppointmentMutation = {
       const client = require("twilio")(accountSid, authToken);
 
       // Format phone number for Twilio texting purposes
-      const clientPhoneNumber = phone(clientObject.phoneNumber);
+      const clientPhoneNumber = phone(clientObject.phoneNumber); 
 
       client.messages
         .create({
@@ -156,19 +156,24 @@ const addAppointmentMutation = {
               ? clientPhoneNumber[0]
               : process.env.TWILIO_TEST_TEXT_NUMBER,
         })
-        .then((message) => console.log("message id", message.sid))
-        .catch((err) => console.log("error", err));
+        .then((message) => console.log("message id:::::::::::::::::::::::::::::::::::", message.id))
+        .catch((err) => console.log("error:::::::::::::::::::::::::::::::::::", err));
     };
 
     const auth = context.isAuth;
     const token = context.cookies["access-token"];
 
     const adminToken = context.cookies["admin-access-token"];
+    console.log(22222222222222, "token:::::::::::::::::::::", token)
+
+    console.log(33333333, "adminToken:::::::::::::::::::::", adminToken)
+
 
     let decodedAdminID = "";
     let currentSignedInEmployee = "";
 
     if (adminToken) {
+      
       decodedAdminID = jwt.decode(adminToken).id.toString();
 
       currentSignedInEmployee = await Employee.findOne({
@@ -274,7 +279,9 @@ const addAppointmentMutation = {
         phoneNumber: args.client[0].phoneNumber,
       });
 
+
       if (!emailTaken || !phoneNumberTaken) {
+
         appt_res = await appointment.save();
         const client_res = await client.save();
 
@@ -328,6 +335,7 @@ const addAppointmentMutation = {
 
         mjmlUtils
           .inject(`./emails/BookedAppointment.html`, {
+            meetingLink: `https://meet.jit.si/${client_res._id}`,
             firstName:
               client_res.firstName[0].toUpperCase() +
               client_res.firstName.slice(1).toLowerCase(),
@@ -366,7 +374,7 @@ const addAppointmentMutation = {
           });
 
         // Sends appointment confirmation text from Twilio
-        twilioTextingFunction(client_res, appt_res);
+        // twilioTextingFunction(client_res, appt_res);
 
         const generateGuestConsentFormAccessToken = (client_res) => {
           const token = jwt.sign(
@@ -441,6 +449,7 @@ const addAppointmentMutation = {
 
       mjmlUtils
         .inject(`./emails/BookedAppointment.html`, {
+          meetingLink: `https://meet.jit.si/${client_res._id}`,
           firstName:
             args.client[0].firstName[0].toUpperCase() +
             args.client[0].firstName.slice(1).toLowerCase(),
@@ -479,7 +488,7 @@ const addAppointmentMutation = {
         });
 
       // Sends appointment confirmation text from Twilio
-      twilioTextingFunction(args.client[0], appt_res);
+      // twilioTextingFunction(args.client[0], appt_res);
 
       client = await Client.findOne({
         email: args.client[0].email,
@@ -594,6 +603,7 @@ const addAppointmentMutation = {
     try {
       mjmlUtils
         .inject(`./emails/BookedAppointment.html`, {
+          meetingLink: `https://meet.jit.si/${client._id}`,
           firstName:
             args.client[0].firstName[0].toUpperCase() +
             args.client[0].firstName.slice(1).toLowerCase(),
@@ -631,11 +641,11 @@ const addAppointmentMutation = {
           });
         });
     } catch (err) {
-      console.log(err);
+      console.log("error:::::::::::::::::::::::::::::::::::", err);
     }
 
     // // Sends appointment confirmation text from Twilio
-    twilioTextingFunction(args.client[0], appt_res);
+    // twilioTextingFunction(args.client[0], appt_res);
 
     (
       await Employee.find({

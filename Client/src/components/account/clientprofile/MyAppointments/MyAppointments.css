@@ -455,14 +455,22 @@
   padding-top: 0.4rem;
 }
 
-.selected_appointments_bottom_buttons_container {
+.selected_appointment_meeting_link_container {
   width: 85%;
   display: flex;
-  height: 20vh;
+  height: 10vh;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin-top: 3vh;
+}
+
+.selected_appointments_bottom_buttons_container {
+  width: 85%;
+  display: flex;
+  height: 10vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .selected_past_appointments_bottom_buttons_container {
@@ -473,6 +481,10 @@
   align-items: center;
   justify-content: space-around;
   margin-top: 3vh;
+}
+
+.meeting_link_button {
+  background: rgb(122 172 1) !important;
 }
 
 .cancel_appointment_button {

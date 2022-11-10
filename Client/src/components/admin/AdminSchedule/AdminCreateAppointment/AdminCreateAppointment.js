@@ -1167,7 +1167,7 @@ const AdminCreateAppointment = (props) => {
                 {!totalPrice ? "$0.00" : "$" + totalPrice + ".00"}
               </div>
             </div>
-            <div className="admin_create_appointment_section_header">
+            {/* <div className="admin_create_appointment_section_header">
               <h2>Payment Details</h2>
             </div>
             <div className="admin_payment_info_buttons_container">
@@ -1192,16 +1192,17 @@ const AdminCreateAppointment = (props) => {
               >
                 Book Without Card
               </div>
-            </div>
-            <Collapse isOpen={addCardCollapseOpen}>
+            </div> */}
+            {/* <Collapse isOpen={addCardCollapseOpen}>
               <AdminPaymentInfo
                 getClientsData={getClientsData}
                 getClientsRefetch={getClientsRefetch}
                 handleBackToSchedule={handleBackToSchedule}
                 handleSubmitBooking={handleSubmitBooking}
               />
-            </Collapse>
-            <Collapse isOpen={bookWithoutCardCollapseOpen}>
+            </Collapse> */}
+            {/* <Collapse isOpen={bookWithoutCardCollapseOpen}> */}
+            <Collapse isOpen={true}>
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
                   <div className="sq-creditcard" onClick={handleSubmitBooking}>

@@ -815,7 +815,7 @@ const ConfirmationPage = (props) => {
                 </div>
               </div>
             </div>
-            <Link
+            {/* <Link
               to={
                 userAuthenticated || guestConsentFormAccessToken
                   ? "/account/clientprofile/consentform/page1"
@@ -828,7 +828,7 @@ const ConfirmationPage = (props) => {
               >
                 <p>FILL CONSENT FORM</p>
               </div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </Modal>
