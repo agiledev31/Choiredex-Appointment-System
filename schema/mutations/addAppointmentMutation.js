@@ -164,10 +164,6 @@ const addAppointmentMutation = {
     const token = context.cookies["access-token"];
 
     const adminToken = context.cookies["admin-access-token"];
-    console.log(22222222222222, "token:::::::::::::::::::::", token)
-
-    console.log(33333333, "adminToken:::::::::::::::::::::", adminToken)
-
 
     let decodedAdminID = "";
     let currentSignedInEmployee = "";
@@ -289,9 +285,9 @@ const addAppointmentMutation = {
           await Employee.find({
             employeeRole: "Admin",
             firstName: {
-              $ne: args.esthetician.split(" ")[0],
+              $ne: args.esthetician.split(" ")[0].toLowerCase(),
             },
-            lastName: { $ne: args.esthetician.split(" ")[1] },
+            lastName: { $ne: args.esthetician.split(" ")[1].toLowerCase() },
           })
         ).forEach((currentEmployee) => {
           const notificationsObj = updateNotifications(currentEmployee);
@@ -302,8 +298,8 @@ const addAppointmentMutation = {
 
         const updatedEmployee = await Employee.findOne(
           {
-            firstName: args.esthetician.split(" ")[0].trim(),
-            lastName: args.esthetician.split(" ")[1].trim(),
+            firstName: args.esthetician.split(" ")[0].trim().toLowerCase(),
+            lastName: args.esthetician.split(" ")[1].trim().toLowerCase(),
           },
           (err, currentEmployee) => {
             const notificationsObj = updateNotifications(currentEmployee);
@@ -530,9 +526,9 @@ const addAppointmentMutation = {
         await Employee.find({
           employeeRole: "Admin",
           firstName: {
-            $ne: args.esthetician.split(" ")[0],
+            $ne: args.esthetician.split(" ")[0].toLowerCase(),
           },
-          lastName: { $ne: args.esthetician.split(" ")[1] },
+          lastName: { $ne: args.esthetician.split(" ")[1].toLowerCase() },
         })
       ).forEach((currentEmployee) => {
         const notificationsObj = updateNotifications(currentEmployee);
@@ -543,8 +539,8 @@ const addAppointmentMutation = {
 
       const updatedEmployee = await Employee.findOne(
         {
-          firstName: args.esthetician.split(" ")[0],
-          lastName: args.esthetician.split(" ")[1],
+          firstName: args.esthetician.split(" ")[0].toLowerCase(),
+          lastName: args.esthetician.split(" ")[1].toLowerCase(),
         },
         (err, currentEmployee) => {
           const notificationsObj = updateNotifications(currentEmployee);
@@ -651,9 +647,9 @@ const addAppointmentMutation = {
       await Employee.find({
         employeeRole: "Admin",
         firstName: {
-          $ne: args.esthetician.split(" ")[0],
+          $ne: args.esthetician.split(" ")[0].toLowerCase(),
         },
-        lastName: { $ne: args.esthetician.split(" ")[1] },
+        lastName: { $ne: args.esthetician.split(" ")[1].toLowerCase() },
       })
     ).forEach((currentEmployee) => {
       if (currentEmployee) {
@@ -666,8 +662,8 @@ const addAppointmentMutation = {
 
     const updatedEmployee = await Employee.findOne(
       {
-        firstName: args.esthetician.split(" ")[0],
-        lastName: args.esthetician.split(" ")[1],
+        firstName: args.esthetician.split(" ")[0].toLowerCase(),
+        lastName: args.esthetician.split(" ")[1].toLowerCase(),
       },
       (err, currentEmployee) => {
         if (currentEmployee) {

@@ -20,6 +20,7 @@ const deleteAppointmentMutation = {
   async resolve(parent, args, context) {
     const accessToken = context.cookies["access-token"];
     const adminAccessToken = context.cookies["admin-access-token"];
+
     if (!context.isAuth && !adminAccessToken) {
       throw new UserInputError("User is not authenticated.");
     } else {
@@ -44,15 +45,12 @@ const deleteAppointmentMutation = {
             _id: args._id,
           });
 
-        const allEmployee = await Employee.find({});
-
-        const filteredEmployee = allEmployee
-          .filter((item) => {
-            return item.firstName.toLowerCase() == deletedAppointment.esthetician.split(" ")[0].toLowerCase()
-          })
-          .filter((item) => (item.lastName.toLowerCase() == deletedAppointment.esthetician.split(" ")[1].toLowerCase()));
-
-        const deletingEmployee = filteredEmployee[0]
+          const deletingEmployee = await Employee.findOne(
+            {
+              firstName: deletedAppointment.esthetician.split(" ")[0].toLowerCase(),
+              lastName: deletedAppointment.esthetician.split(" ")[1].toLowerCase(),
+            }
+          );
 
           let newNotification = new Notification({
             _id: new mongoose.Types.ObjectId(),
@@ -78,37 +76,39 @@ const deleteAppointmentMutation = {
 
           const updateNotifications = (staff) =>
             createNotificationFunction(newNotification, staff);
-          
-          const allEmployee_admin = await Employee.find({});
 
-          const filteredAdminEmployee = allEmployee_admin
-            .filter((item) => item.employeeRole == "Admin")
-            .filter((item) => {
-              return item.firstName.toLowerCase() == clientObject.firstName[0].toLowerCase()
+          (
+            await Employee.find({
+              employeeRole: "Admin",
+              firstName: {
+                $ne: selectedAppointment.esthetician.split(" ")[0].toLowerCase(),
+              },
+              lastName: { $ne: selectedAppointment.esthetician.split(" ")[1].toLowerCase() },
             })
-            .filter((item) => (item.lastName.toLowerCase() == clientObject.firstName.slice(1).toLowerCase()))
-          
-          const notificationsObj = null
-          if(filteredAdminEmployee.length){
-            notificationsObj = updateNotifications(filteredAdminEmployee[0]);
-            filteredAdminEmployee[0].notifications = notificationsObj.notifications;
-            filteredAdminEmployee[0].save();
-          }
+          ).forEach((currentEmployee) => {
+            const notificationsObj = updateNotifications(currentEmployee);
+            currentEmployee.notifications = notificationsObj.notifications;
 
-          const allUpdatedEmployee = await Employee.find({});
+            currentEmployee.save();
+          });
 
-          const filteredUpdatedEmployee = allUpdatedEmployee
-            .filter((item) => {
-              return item.firstName.toLowerCase() == deletedAppointment.esthetician.split(" ")[0].toLowerCase()
-            })
-            .filter((item) => (item.lastName.toLowerCase() == deletedAppointment.esthetician.split(" ")[1].toLowerCase()));
+          const updatedEmployee = await Employee.findOne(
+            {
+              firstName: selectedAppointment.esthetician.split(" ")[0].toLowerCase(),
+              lastName: selectedAppointment.esthetician.split(" ")[1].toLowerCase(),
+            },
+            (err, currentEmployee) => {
+              const notificationsObj = updateNotifications(currentEmployee);
 
-          let currentUpdatedEmployee = null;
-          if(filteredUpdatedEmployee.length){
-            currentUpdatedEmployee = filteredUpdatedEmployee[0]
-          };
+              if (currentEmployee) {
+                currentEmployee.notifications = notificationsObj.notifications;
 
-          const updatedEmployeeRes = await currentUpdatedEmployee.save();
+                currentEmployee.save();
+              }
+            }
+          );
+
+          const updatedEmployeeRes = await updatedEmployee.save();
 
           context.pubsub.publish(UPDATED_EMPLOYEE, {
             employee: updatedEmployeeRes,
@@ -129,7 +129,6 @@ const deleteAppointmentMutation = {
           const deletingEmployee = await Employee.findOne({
             _id: decodedAdminID,
           });
-
 
           let newNotification = new Notification({
             _id: new mongoose.Types.ObjectId(),
@@ -155,36 +154,38 @@ const deleteAppointmentMutation = {
           const updateNotifications = (staff) =>
             createNotificationFunction(newNotification, staff);
 
-          const allEmployee_admin = await Employee.find({});
-
-          const filteredAdminEmployee = allEmployee_admin
-            .filter((item) => item.employeeRole == "Admin")
-            .filter((item) => {
-              return item.firstName.toLowerCase() == clientObject.firstName[0].toLowerCase()
+          (
+            await Employee.find({
+              employeeRole: "Admin",
+              firstName: {
+                $ne: selectedAppointment.esthetician.split(" ")[0].toLowerCase(),
+              },
+              lastName: { $ne: selectedAppointment.esthetician.split(" ")[1].toLowerCase() },
             })
-            .filter((item) => (item.lastName.toLowerCase() == clientObject.firstName.slice(1).toLowerCase()))
-          
-          const notificationsObj = null
-          if(filteredAdminEmployee.length){
-            notificationsObj = updateNotifications(filteredAdminEmployee[0]);
-            filteredAdminEmployee[0].notifications = notificationsObj.notifications;
-            filteredAdminEmployee[0].save();
-          }
+          ).forEach((currentEmployee) => {
+            const notificationsObj = updateNotifications(currentEmployee);
+            currentEmployee.notifications = notificationsObj.notifications;
 
-          const allUpdatedEmployee = await Employee.find({});
+            currentEmployee.save();
+          });
 
-          const filteredUpdatedEmployee = allUpdatedEmployee
-            .filter((item) => {
-              return item.firstName.toLowerCase() == deletedAppointment.esthetician.split(" ")[0].toLowerCase()
-            })
-            .filter((item) => (item.lastName.toLowerCase() == deletedAppointment.esthetician.split(" ")[1].toLowerCase()));
+          const updatedEmployee = await Employee.findOne(
+            {
+              firstName: selectedAppointment.esthetician.split(" ")[0].toLowerCase(),
+              lastName: selectedAppointment.esthetician.split(" ")[1].toLowerCase(),
+            },
+            (err, currentEmployee) => {
+              const notificationsObj = updateNotifications(currentEmployee);
 
-          let currentUpdatedEmployee = null;
-          if(filteredUpdatedEmployee.length){
-            currentUpdatedEmployee = filteredUpdatedEmployee[0]
-          };
+              if (currentEmployee) {
+                currentEmployee.notifications = notificationsObj.notifications;
 
-          const updatedEmployeeRes = await currentUpdatedEmployee.save();
+                currentEmployee.save();
+              }
+            }
+          );
+
+          const updatedEmployeeRes = await updatedEmployee.save();
 
           context.pubsub.publish(UPDATED_EMPLOYEE, {
             employee: updatedEmployeeRes,

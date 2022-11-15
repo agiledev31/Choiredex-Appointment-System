@@ -343,7 +343,7 @@ const AdminSchedule = (props) => {
         <h1>SCHEDULE</h1>
       </div>
       <div className="admin_calendar_top_buttons_container">
-        {getEmployeeData ? (
+        {/* {getEmployeeData ? (
           getEmployeeData.employee ? (
             <Dropdown
               options={renderScheduleSelectionDropdownOptions()}
@@ -363,7 +363,7 @@ const AdminSchedule = (props) => {
               }
             />
           ) : null
-        ) : null}
+        ) : null} */}
         <div
           className="admin_calendar_create_personal_event_button"
           onClick={() => changePersonalEventClicked(true)}
