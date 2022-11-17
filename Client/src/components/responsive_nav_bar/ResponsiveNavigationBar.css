@@ -232,6 +232,7 @@
 
 /* Position and sizing of burger button */
 .bm-burger-button {
+  display: none;
   position: relative;
   width: calc(1.2rem + 5vw);
   height: 100%;
@@ -444,7 +445,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 @media only screen and (min-width: 1200px) and (orientation: landscape) {
   .right_nav {
-    justify-content: space-between;
+    /* justify-content: space-between; */
   }
 
   .right_nav h2 {

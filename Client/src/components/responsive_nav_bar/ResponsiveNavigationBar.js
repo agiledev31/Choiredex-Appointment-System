@@ -791,7 +791,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
         </div>
       </div>
       <div className="right_nav">
-        <h2
+        {/* <h2
           onClick={props.handleClickToScrollToHome}
           style={{
             color:
@@ -821,8 +821,8 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           }}
         >
           HOME
-        </h2>
-        <h2
+        </h2> */}
+        {/* <h2
           onClick={props.handleClickToScrollToTreatments}
           style={{
             color:
@@ -852,8 +852,8 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           }}
         >
           FACIAL
-        </h2>
-        <h2
+        </h2> */}
+        {/* <h2
           style={{
             color:
               props.currentScreenSize === ""
@@ -883,8 +883,8 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           onClick={props.handleClickToScrollToAddOns}
         >
           ADD-ONS
-        </h2>
-        <h2
+        </h2> */}
+        {/* <h2
           onClick={props.handleClickToScrollToInstagram}
           style={{
             color:
@@ -914,7 +914,10 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           }}
         >
           FOLLOW US
-        </h2>
+        </h2> */}
+
+        {/* language select button */}
+
         <div
           className="nav_login_container"
           style={{

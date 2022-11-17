@@ -74,7 +74,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
 
   return (
     <div className="all_treatments_container" id={name} ref={Treatments1Ref}>
-      <ToastContainer
+      {/* <ToastContainer
         toastClassName="toast_container"
         position={
           !currentScreenSize
@@ -96,7 +96,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
         pauseOnVisibilityChange
         draggable={true}
         draggablePercent={20}
-      />
+      /> */}
       <header className="all_treatments_header" ref={inViewRef}>
         {inView ? (
           <Spring
@@ -112,9 +112,9 @@ const AllTreatments = React.forwardRef((props, ref) => {
           >
             {(styles) => (
               <>
-                <Suspense fallback={<></>}>
+                {/* <Suspense fallback={<></>}>
                   <ToastifyCSSImport />
-                </Suspense>
+                </Suspense> */}
                 <h2
                   style={{
                     position: `${styles.position}`,
@@ -122,7 +122,7 @@ const AllTreatments = React.forwardRef((props, ref) => {
                   }}
                   ref={treatmentsHeaderRef}
                 >
-                  YOUR FACIAL
+                  SERVICES
                 </h2>
                 <span
                   style={{
@@ -142,10 +142,10 @@ const AllTreatments = React.forwardRef((props, ref) => {
                   }}
                 >
                   <p>
-                    Each facial is <br />
-                    customized <br />
-                    to fit your specific <br />
-                    skincare needs
+                    Welcome, <br />
+                    to schedule your reservation. <br />
+                    Please select the service <br />
+                    you need today.
                   </p>
                 </h3>
               </>

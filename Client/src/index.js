@@ -19,6 +19,7 @@ import RootReducer from "./RootReducer";
 import LandingPage from "./components/landing_page/LandingPage";
 import FollowUs from "./components/follow_us/FollowUs";
 import ContactUs from "./components/contact_us/ContactUs";
+import AllServices from "./components/all_services/AllServices";
 import AllTreatments from "./components/all_treatments/AllTreatments";
 import AllAddOns from "./components/all_add_ons/AllAddOns";
 import ShoppingCart from "./components/shopping_cart/ShoppingCart";
@@ -1722,7 +1723,7 @@ const App = () => {
                 ref={ref}
                 name="landing_page"
               />
-              <AllTreatments
+              <AllServices
                 name="treatments"
                 currentScreenSize={currentScreenSize}
                 initialScreenSize={initialScreenSize}
@@ -1737,7 +1738,22 @@ const App = () => {
                 treatmentsPageInView={treatmentsPageInView}
                 scrollValue={scrollValue}
               />
-              <AllAddOns
+              {/* <AllTreatments
+                name="treatments"
+                currentScreenSize={currentScreenSize}
+                initialScreenSize={initialScreenSize}
+                Treatments1Ref={Treatments1Ref}
+                resetAllCartStates={resetAllCartStates}
+                treatmentsPageIsVisibleFunction={
+                  treatmentsPageIsVisibleFunction
+                }
+                treatmentsPageIsNotVisibleFunction={
+                  treatmentsPageIsNotVisibleFunction
+                }
+                treatmentsPageInView={treatmentsPageInView}
+                scrollValue={scrollValue}
+              /> */}
+              {/* <AllAddOns
                 name="add_ons"
                 currentScreenSize={currentScreenSize}
                 initialScreenSize={initialScreenSize}
@@ -1745,13 +1761,13 @@ const App = () => {
                 resetAllCartStatesExceptTreatments={
                   resetAllCartStatesExceptTreatments
                 }
-              />
-              <FollowUs
+              /> */}
+              {/* <FollowUs
                 name="instagram"
                 initialScreenSize={initialScreenSize}
                 currentScreenSize={currentScreenSize}
                 InstagramRef={InstagramRef}
-              />
+              /> */}
               <ContactUs
                 name="contact"
                 initialScreenSize={initialScreenSize}
