@@ -4,16 +4,6 @@
  
  const StoreSelect = (props) => {
 
-  // const {
-  //   position,
-  //   setPosition,
-  //   locations,
-  //   travelMode,
-  //   setTravelMode,
-  //   selectedLocation,
-  //   selectLocation,
-  //   setCompleted,
-  // } = props;
   const locations = [
     {
       name: "Belle Étoile",
@@ -25,17 +15,20 @@
       countryID: 1
     }
   ];
-  const [position, setPosition] =  useState({
-    name: "Belle Étoile",
-    address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
-    coordinates: [100, 100],
-    location_code: 0,
-    group_id: 1,
-    timezone: 1,
-    countryID: 1
-  });
+  const [position, setPosition] =  useState(undefined);
+  // {
+  //   name: "Belle Étoile",
+  //   address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
+  //   coordinates: {
+  //     lat: 0,
+  //     lng: 0,
+  //   },
+  //   location_code: 0,
+  //   group_id: 1,
+  //   countryID: 1
+  // }
   const [travelMode, setTravelMode] =  useState(1);
-  const [selectedLocation, setSelectedLocation] =  useState(null);
+  const [selectedLocation, setSelectedLocation] =  useState(undefined);
  
    return (
     <div className="store_select_view_container">

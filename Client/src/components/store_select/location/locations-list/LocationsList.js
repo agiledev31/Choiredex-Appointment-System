@@ -10,9 +10,12 @@ import { useTranslation } from "react-i18next";
 
 import LocationsListItem from "./LocationsListItem";
 
-
 const LocationsList = (props) => {
-
+  const {
+    locations,
+    selectedLocation,
+    setSelectedLocation
+  } = props;
 
   return (
     <Box mt={2}>
@@ -21,14 +24,14 @@ const LocationsList = (props) => {
           width: "100%",
         }}
       >
-        {/* {result.map((item) => ( */}
+        {locations.map((item) => (
           <LocationsListItem
-            // key={item.location.name}
-            // location={item}
-            // selectedLocation={selectedLocation}
-            // selectLocation={() => selectLocation(item)}
+            key={item.location_code}
+            location={item}
+            selectedLocation={selectedLocation}
+            setSelectedLocation={setSelectedLocation}
           />
-        {/* ))} */}
+        ))}
       </List>
     </Box>
   );

@@ -272,10 +272,12 @@ import adminStaffMemberRolesReducer from "./reducers/Admin/AdminAddStaffMember/A
 import adminNotificationsReducer from "./reducers/Admin/Notifications/adminNotificationsReducer";
 import onActivityPageReducer from "./reducers/Admin/OnActivityPage/onActivityPageReducer";
 import adminNotificationSubscriptionReducer from "./reducers/Admin/AdminNotificationSubscription/adminNotificationSubscriptionReducer";
+import ServicesReducer from "./reducers/Services/ServicesReducer";
 
 const RootReducer = combineReducers({
   // Reducers for "LEARN MORE" button on treatments/add-ons on mobile
   // Treatments
+  storePageActive: ServicesReducer,
   calmToggle: calmToggleReducer,
   clarifyToggle: clarifyToggleReducer,
   bacialToggle: bacialToggleReducer,

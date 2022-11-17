@@ -1,0 +1,9 @@
+const IS_STOREPAGE_ACTIVE = "IS_STOREPAGE_ACTIVE";
+
+const ACTION_IS_STOREPAGE_ACTIVE = () => {
+  return {
+    type: IS_STOREPAGE_ACTIVE
+  };
+};
+
+export default ACTION_IS_STOREPAGE_ACTIVE;

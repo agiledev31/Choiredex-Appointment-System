@@ -19,6 +19,7 @@ import RootReducer from "./RootReducer";
 import LandingPage from "./components/landing_page/LandingPage";
 import FollowUs from "./components/follow_us/FollowUs";
 import ContactUs from "./components/contact_us/ContactUs";
+import Stepper from "./components/stepper/Stepper";
 import AllServices from "./components/all_services/AllServices";
 import AllTreatments from "./components/all_treatments/AllTreatments";
 import AllAddOns from "./components/all_add_ons/AllAddOns";
@@ -185,6 +186,7 @@ const store = createStore(
 );
 
 const App = () => {
+  // const [isStorePage, setIsStorePage] = useState(false)
   const location = useLocation();
 
   const LandingPageRef = useRef(null);
@@ -216,6 +218,9 @@ const App = () => {
     changeLargeScreenFrozenScrollPosition,
   ] = useState("");
 
+  const storePageActive = useSelector(
+    (state) => state.storePageActive.storePageActive
+  );
   const navbarVisible = useSelector(
     (state) => state.navbarIsVisibleReducer.visible
   );
@@ -674,8 +679,8 @@ const App = () => {
       smooth: true,
       isDynamic: true,
       offset: -(!currentScreenHeight
-        ? initialScreenHeight * 0.07
-        : currentScreenHeight * 0.07),
+        ? initialScreenHeight * 0.15
+        : currentScreenHeight * 0.15),
       containerId: "main_container_element",
     });
   };
@@ -1727,23 +1732,27 @@ const App = () => {
                 ref={ref}
                 name="landing_page"
               />
-              {/* <AllServices
-                name="treatments"
-                currentScreenSize={currentScreenSize}
-                initialScreenSize={initialScreenSize}
-                Treatments1Ref={Treatments1Ref}
-                resetAllCartStates={resetAllCartStates}
-                treatmentsPageIsVisibleFunction={
-                  treatmentsPageIsVisibleFunction
-                }
-                treatmentsPageIsNotVisibleFunction={
-                  treatmentsPageIsNotVisibleFunction
-                }
-                treatmentsPageInView={treatmentsPageInView}
-                scrollValue={scrollValue}
-              /> */}
-              <StoreSelect
-              />
+              <Stepper />
+              {!storePageActive && 
+                <AllServices
+                  name="treatments"
+                  currentScreenSize={currentScreenSize}
+                  initialScreenSize={initialScreenSize}
+                  Treatments1Ref={Treatments1Ref}
+                  resetAllCartStates={resetAllCartStates}
+                  treatmentsPageIsVisibleFunction={
+                    treatmentsPageIsVisibleFunction
+                  }
+                  treatmentsPageIsNotVisibleFunction={
+                    treatmentsPageIsNotVisibleFunction
+                  }
+                  treatmentsPageInView={treatmentsPageInView}
+                  scrollValue={scrollValue}
+                />
+              }
+              {storePageActive && 
+                <StoreSelect />
+              }
               {/* <AllTreatments
                 name="treatments"
                 currentScreenSize={currentScreenSize}

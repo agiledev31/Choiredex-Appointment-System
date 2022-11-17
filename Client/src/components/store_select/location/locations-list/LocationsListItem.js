@@ -8,22 +8,27 @@ import { useTranslation } from "react-i18next";
 
 
 const LocationsListItem = (props) => {
+  const {
+    selectedLocation,
+    setSelectedLocation,
+    location,
+  } = props;
   const { t } = useTranslation();
 
   return (
     <>
       <Box
-        // sx={{
-        //   p: 2,
-        //   backgroundColor: (theme) => {
-        //     if (selectedLocation?.location.id === location.location.id) {
-        //       return darken(theme.palette.background.default, 0.05);
-        //     }
-        //     return theme.palette.background.paper;
-        //   },
-        // }}
-        // key={`location-${location.location.id}`}
-        // onClick={() => selectLocation(location)}
+        sx={{
+          p: 2,
+          backgroundColor: (theme) => {
+            if (selectedLocation?.location_code === location.location_code) {
+              return darken(theme.palette.background.default, 0.05);
+            }
+            return theme.palette.background.paper;
+          },
+        }}
+        key={`location-${location.location_code}`}
+        onClick={() => setSelectedLocation(location)}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
@@ -32,8 +37,7 @@ const LocationsListItem = (props) => {
             color="textPrimary"
             gutterBottom
           >
-            {/* {location.location.name} */}
-            Belle Étoile
+            {location.name}
           </Typography>
 
           <Typography
@@ -42,8 +46,7 @@ const LocationsListItem = (props) => {
             color="textPrimary"
             gutterBottom
           >
-            {/* {location.location.address} */}
-            Rte d'Arlon, 8050 Bertrange, Luxembourg
+            {location.address}
           </Typography>
         </Box>
 

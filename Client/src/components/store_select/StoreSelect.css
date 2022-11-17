@@ -1,16 +1,32 @@
 .store_select_view_container {
     margin: 30px;
-    padding: 30px;
+    padding: 0 30px;
 }
 
 .use_mylocation_btn {
     border-radius: 20px;
 }
-.autocomplete_initial_position {
+
+.autocomplete_initial_position_container {
     width: 50%;
     min-width: 300px;
+    position: relative;
+}
+.autocomplete_initial_position {
+    width: 100%;
     height: 50px;
     border-radius: 30px;
     border: 1px solid #978f8f;
     padding: 5px 20px;
+}
+.position_clear_btn {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.travel_mode_btn_group_container {
+    display: flex;
+    align-items: center;
 }

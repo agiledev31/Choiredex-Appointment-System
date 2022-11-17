@@ -1,0 +1,10 @@
+.stepper_container {
+    display: flex;
+    justify-content: right;
+    margin: 20px 20px 0 0 ;
+    border-radius: 10px;
+}
+.stepper_container button{
+    min-width: 150px;
+    border-radius: 5px;
+}

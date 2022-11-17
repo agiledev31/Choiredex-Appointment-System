@@ -1,13 +1,25 @@
-/** @format
- * Component that let visitor select travel mode, initial position and a location
- */
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import React from "react";
 
 import InitialPosition from "./initial-position/InitialPosition";
 import LocationsList from "./locations-list/LocationsList";
-// import Map from "./map/Map";
+import Map from "./map/Map";
+
+const locations = [
+  {
+    name: "Belle-et-Houllefort",
+    address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
+    coordinates: {
+      lat: 50.745881, 
+      lng: 1.759262,
+    },
+    location_code: "ChIJS7N8uP4z3EcRjMgFQmjNs_0",
+    group_id: 1,
+    countryID: "FR"
+  },
+]
+
 import TravelModes from "./travel-modes/TravelModes";
 
 const Location = (props) => {
@@ -20,7 +32,7 @@ const Location = (props) => {
   selectedLocation,
   setSelectedLocation,
   } = props;
-
+  
   return (
     <Box>
       <Grid container spacing={8}>
@@ -28,7 +40,6 @@ const Location = (props) => {
           <InitialPosition position={position} setPosition={setPosition} />
           <TravelModes travelMode={travelMode} setTravelMode={setTravelMode} />
           <LocationsList
-            isMeeting={false}
             locations={locations}
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
@@ -37,15 +48,12 @@ const Location = (props) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          {/* <Map
+          <Map
             locations={locations}
-            travelMode={travelMode}
-            setTravelMode={setTravelMode}
             position={position}
-            setPosition={setPosition}
             selectedLocation={selectedLocation}
-            selectLocation={selectLocation}
-          /> */}
+            setSelectedLocation={setSelectedLocation}
+          />
         </Grid>
       </Grid>
     </Box>
