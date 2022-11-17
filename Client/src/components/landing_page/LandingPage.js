@@ -924,7 +924,14 @@ const LandingPage = React.forwardRef((props, ref) => {
             </div>
           )}
         </Spring>
-        <div className="splash_screen">
+        <div 
+          className="splash_screen"
+          style={{
+            display: splashScreenComplete
+              ? "none"
+              : "flex",
+          }}
+        >
           <SplashScreen
             currentScreenHeight={currentScreenHeight}
             initialScreenHeight={initialScreenHeight}

@@ -23,6 +23,7 @@ import AllServices from "./components/all_services/AllServices";
 import AllTreatments from "./components/all_treatments/AllTreatments";
 import AllAddOns from "./components/all_add_ons/AllAddOns";
 import ShoppingCart from "./components/shopping_cart/ShoppingCart";
+import StoreSelect from "./components/store_select/StoreSelect";
 import * as smoothscroll from "smoothscroll-polyfill";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -53,6 +54,9 @@ import { scroller } from "react-scroll";
 import ResponsiveNavigationBar from "./components/responsive_nav_bar/ResponsiveNavigationBar";
 import CookieBanner from "react-cookie-banner";
 import isEqual from "lodash.isequal";
+
+import { SnackbarProvider } from "notistack";
+
 import ACTION_CART_IS_NOT_ACTIVE from "./actions/CartIsActive/ACTION_CART_IS_NOT_ACTIVE";
 import ACTION_NAVBAR_NOT_VISIBLE from "./actions/NavbarIsVisible/ACTION_NAVBAR_NOT_VISIBLE";
 import ACTION_NAVBAR_IS_VISIBLE from "./actions/NavbarIsVisible/ACTION_NAVBAR_IS_VISIBLE";
@@ -1723,7 +1727,7 @@ const App = () => {
                 ref={ref}
                 name="landing_page"
               />
-              <AllServices
+              {/* <AllServices
                 name="treatments"
                 currentScreenSize={currentScreenSize}
                 initialScreenSize={initialScreenSize}
@@ -1737,6 +1741,8 @@ const App = () => {
                 }
                 treatmentsPageInView={treatmentsPageInView}
                 scrollValue={scrollValue}
+              /> */}
+              <StoreSelect
               />
               {/* <AllTreatments
                 name="treatments"
@@ -1895,9 +1901,11 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
-        <AliveScope>
-          <App />
-        </AliveScope>
+        <SnackbarProvider>
+          <AliveScope>
+            <App />
+          </AliveScope>
+        </SnackbarProvider>
       </ApolloProvider>
     </Provider>
   </Router>,
