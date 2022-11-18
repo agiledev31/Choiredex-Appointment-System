@@ -12,6 +12,7 @@
   "dependencies": {
     "@axelspringer/graphql-google-pubsub": "^2.1.0",
     "@babel/polyfill": "^7.12.1",
+    "@react-google-maps/api": "^2.17.0",
     "apollo-server": "^2.15.1",
     "apollo-server-express": "^2.15.1",
     "axios": "^0.21.1",

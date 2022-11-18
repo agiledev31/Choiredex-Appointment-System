@@ -2,19 +2,22 @@
  import Location from "./location/Location";
  import "./StoreSelect.css";
  
+const locations = [
+  {
+    name: "Belle-et-Houllefort",
+    address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
+    coordinates: {
+      lat: 50.745881, 
+      lng: 1.759262,
+    },
+    location_code: "ChIJS7N8uP4z3EcRjMgFQmjNs_0",
+    group_id: 1,
+    countryID: "FR"
+  },
+]
+
  const StoreSelect = (props) => {
 
-  const locations = [
-    {
-      name: "Belle Étoile",
-      address: "Rte d'Arlon, 8050 Bertrange, Luxembourg",
-      coordinates: [10, 10],
-      location_code: 0,
-      group_id: 1,
-      timezone: 1,
-      countryID: 1
-    }
-  ];
   const [position, setPosition] =  useState(undefined);
   // {
   //   name: "Belle Étoile",

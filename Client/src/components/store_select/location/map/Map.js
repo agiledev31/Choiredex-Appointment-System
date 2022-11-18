@@ -37,7 +37,7 @@ const Map = (props) => {
             key="target"
             label={selectedLocation.name}
             position={selectedLocation.coordinates}
-            // animation={google.maps.Animation.DROP}
+            animation={google.maps.Animation.DROP}
           />
         )}
 
@@ -45,7 +45,7 @@ const Map = (props) => {
         {selectedLocation !== undefined && (
           <Polyline
             key="polyline"
-            path={[position.coordinates, selectedLocation.name]}
+            path={[position.coordinates, selectedLocation.coordinates]}
             options={{
               strokeColor: red["700"],
             }}
@@ -56,7 +56,7 @@ const Map = (props) => {
         {selectedLocation !== undefined && (
           <InfoWindow
             key={""}
-            position={selectedLocation.name}
+            position={selectedLocation.coordinates}
             onCloseClick={function () {
               setSelectedLocation(undefined);
             }}
@@ -114,8 +114,6 @@ const Map = (props) => {
         })} */}
       </GoogleMap>
     </LoadScript>
-    
   );
 };
-
 export default Map;

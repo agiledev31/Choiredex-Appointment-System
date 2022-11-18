@@ -679,8 +679,8 @@ const App = () => {
       smooth: true,
       isDynamic: true,
       offset: -(!currentScreenHeight
-        ? initialScreenHeight * 0.15
-        : currentScreenHeight * 0.15),
+        ? initialScreenHeight * 0.16
+        : currentScreenHeight * 0.16),
       containerId: "main_container_element",
     });
   };
