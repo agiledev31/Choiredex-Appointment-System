@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { GrCart } from "react-icons/gr";
 import { FaCircle, FaUser } from "react-icons/fa";
 import { FcHome, FcPlus, FcAbout, FcLike, FcPaid } from "react-icons/fc";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import BurgerMenu from "./Burger/BurgerMenuComponent";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -152,7 +152,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
   const cartActivated = () => {
     dispatch(ACTION_CART_IS_ACTIVE());
     document.body.style.setProperty("background", "rgb(255, 255, 255)");
-    toast.dismiss();
+    // toast.dismiss();
   };
 
   const cartDeactivated = () => {
@@ -160,6 +160,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
   };
 
   const handleShoppingCartClick = () => {
+    console.log("cartIsActive", cartIsActive)
     if (props.currentScreenSize === "") {
       if (props.initialScreenSize >= 1200) {
         if (cartIsActive) {
@@ -196,7 +197,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
   };
 
   const handleLogoutClicked = () => {
-    toast.dismiss();
+    // toast.dismiss();
 
     if (
       !location.pathname.includes("/account/clientprofile") &&

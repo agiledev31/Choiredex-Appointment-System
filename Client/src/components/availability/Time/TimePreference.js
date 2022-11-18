@@ -1552,12 +1552,12 @@ const TimePreference = (props) => {
                 transition: "background 0.5s ease, color 0.5s ease",
               }}
               onClick={() => {
-                // if (userAuthenticated) {
-                //   dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
-                // } else {
-                //   dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
-                // }
-                dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
+                if (userAuthenticated) {
+                  // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+                  dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
+                } else {
+                  dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
+                }
               }}
             >
               {/* <p>Continue Checkout</p> */}

@@ -186,8 +186,12 @@ const store = createStore(
 );
 
 const App = () => {
-  // const [isStorePage, setIsStorePage] = useState(false)
   const location = useLocation();
+
+  const [selectedStore, setSelectedStore] = useState(undefined);
+  const storePageActive = useSelector(
+    (state) => state.storePageActive.storePageActive
+  );
 
   const LandingPageRef = useRef(null);
   const Treatments1Ref = useRef(null);
@@ -218,9 +222,6 @@ const App = () => {
     changeLargeScreenFrozenScrollPosition,
   ] = useState("");
 
-  const storePageActive = useSelector(
-    (state) => state.storePageActive.storePageActive
-  );
   const navbarVisible = useSelector(
     (state) => state.navbarIsVisibleReducer.visible
   );
@@ -679,8 +680,8 @@ const App = () => {
       smooth: true,
       isDynamic: true,
       offset: -(!currentScreenHeight
-        ? initialScreenHeight * 0.16
-        : currentScreenHeight * 0.16),
+        ? initialScreenHeight * 0.165
+        : currentScreenHeight * 0.165),
       containerId: "main_container_element",
     });
   };
@@ -948,6 +949,7 @@ const App = () => {
 
   const redirectToCartRoutes = () => {
     setTimeout(() => {
+      console.log("index", cartIsActive, cartPageOpened)
       if (cartIsActive) {
         if (cartPageOpened === "") {
           return <Redirect to="/" />;
@@ -1129,6 +1131,8 @@ const App = () => {
     if (!cartPageOpened || cartPageOpened === "Cart") {
       return (
         <ShoppingCart
+          selectedStore={selectedStore}
+          setSelectedStore={setSelectedStore}
           currentScreenSize={currentScreenSize}
           initialScreenSize={initialScreenSize}
           getEmployeesData={getEmployeesData}
@@ -1142,6 +1146,7 @@ const App = () => {
       return (
         <Suspense fallback={renderCartRoutesFallbackLoader()}>
           <Availability
+            selectedStore={selectedStore}
             currentScreenSize={currentScreenSize}
             initialScreenSize={initialScreenSize}
             getEmployeesData={getEmployeesData}
@@ -1152,6 +1157,7 @@ const App = () => {
       return (
         <Suspense fallback={renderCartRoutesFallbackLoader()}>
           <TimePreference
+            selectedStore={selectedStore}
             currentScreenSize={currentScreenSize}
             initialScreenSize={initialScreenSize}
           />
@@ -1161,6 +1167,7 @@ const App = () => {
       return (
         <Suspense fallback={renderCartRoutesFallbackLoader()}>
           <GuestCheckout
+            selectedStore={selectedStore}
             currentScreenSize={currentScreenSize}
             initialScreenSize={initialScreenSize}
           />
@@ -1185,6 +1192,7 @@ const App = () => {
       return (
         <Suspense fallback={renderCartRoutesFallbackLoader()}>
           <ConfirmationPage
+            selectedStore={selectedStore}
             currentScreenSize={currentScreenSize}
             initialScreenSize={initialScreenSize}
           />
@@ -1751,7 +1759,11 @@ const App = () => {
                 />
               }
               {storePageActive && 
-                <StoreSelect />
+                <StoreSelect 
+                  selectedStore={selectedStore}
+                  setSelectedStore={setSelectedStore}
+                  resetAllCartStates={resetAllCartStates}
+                />
               }
               {/* <AllTreatments
                 name="treatments"
@@ -1798,6 +1810,7 @@ const App = () => {
               render={() => (
                 <ShoppingCart
                   path="/cart"
+                  selectedStore={selectedStore}
                   getEmployeesData={getEmployeesData}
                   initialScreenSize={initialScreenSize}
                   currentScreenSize={currentScreenSize}

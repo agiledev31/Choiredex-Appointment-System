@@ -79,6 +79,7 @@ import ACTION_FINAL_BOOKING_MODAL_RESET from "../../actions/InCart/FinalBookingM
 import ACTION_CART_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_CART_PAGE_OPENED";
 import ACTION_SELECTED_SALT_CAVE_DURATION_RESET from "../../actions/Treatments/SaltCave/SaltCaveDuration/ACTION_SELECTED_SALT_CAVE_DURATION_RESET";
 import ACTION_DAY_OF_THE_WEEK_RESET from "../../actions/SelectedDay/DayOfTheWeek/ACTION_DAY_OF_THE_WEEK_RESET";
+import ACTION_IS_STOREPAGE_NOT_ACTIVE from "../../actions/Services/ACTION_IS_STOREPAGE_NOT_ACTIVE";
 import "./ConfirmationPage.css";
 import "../account/clientprofile/ConsentForm/ConsentForm.css";
 
@@ -228,7 +229,7 @@ const ConfirmationPage = (props) => {
 
     const treatmentsArray = () => {
       return {
-        treatments: treatmentsArr,
+        treatments: [treatmentsArr[0]],
       };
     };
 
@@ -587,6 +588,7 @@ const ConfirmationPage = (props) => {
     dispatch(ACTION_AVAILABILITY_RESET());
     dispatch(ACTION_APPOINTMENT_END_TIME_RESET());
     dispatch(ACTION_CART_PAGE_OPENED());
+    dispatch(ACTION_IS_STOREPAGE_NOT_ACTIVE());
   };
 
   return (
@@ -615,7 +617,7 @@ const ConfirmationPage = (props) => {
       <div className="confirmation_page_header">
         <h2>BOOKING SUMMARY</h2>
         <h3>
-          {counter} treatment{counter > 1 ? "s" : null}
+          {/* {counter} treatment{counter > 1 ? "s" : null} */}
         </h3>
       </div>
       <p className="confirmation_page_statement">
@@ -681,18 +683,16 @@ const ConfirmationPage = (props) => {
       </div>
       <div className="summary_facial_container">
         <h2 className="summary_facial_container_title">
-          My
-          {saltCaveInCart
-            ? " Treatment"
-            : " Facial (with " + selectedEsthetician + ")"}
+          My Partner:
+          {" " + props.selectedStore.manager.first_name + " " + props.selectedStore.manager.last_name }
         </h2>
-        {renderSummaryCardTreatments()}
+        {/* {renderSummaryCardTreatments()} */}
       </div>
-      {renderSummaryCardAddOnSection()}
-      <div className="summary_card_subtotal_container">
+      {/* {renderSummaryCardAddOnSection()} */}
+      {/* <div className="summary_card_subtotal_container">
         <p>TOTAL</p>
         <p>${totalPrice}</p>
-      </div>
+      </div> */}
       <Link
         to={
           props.currentScreenSize

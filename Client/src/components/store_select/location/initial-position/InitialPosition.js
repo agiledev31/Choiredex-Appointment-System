@@ -13,10 +13,17 @@ const InitialPosition = (props) => {
   const [myPosition, setMyPosition] = useState("")
   const [searchKey, setSearchKey] = useState("")
 
+  useEffect(() => {
+    setTimeout(() => {
+      getPosition();
+      console.log("get position")
+    }, 500)
+  }, [])
   const searchKeyInput = (e) => {
     console.log("searchKey", e.target.value);
     setSearchKey(e.target.value);
   }
+
 
   // If browser supports navigator.geolocation, generate Lat/Long else let user know there is an error
   const getPosition = () => {
@@ -81,7 +88,7 @@ const InitialPosition = (props) => {
   }
 
   const setManualZip = (address) => {
-    props.setPosition({
+    let location = {
       name: address.results[0].address_components[0].short_name,
       address: address.results[0].formatted_address,
       coordinates: {
@@ -91,13 +98,15 @@ const InitialPosition = (props) => {
       location_code: address.results[0].place_id,
       group_id: 1,
       countryID: address.results[0].address_components[2].short_name,
-  });
+    };
+    console.log(location)
+    props.setPosition(location);
   }
 
   const clearPosition = () => {
     setSearchKey("");
     setMyPosition("")
-    props.setPosition(null);
+    props.setPosition(undefined);
   }
 
   return (

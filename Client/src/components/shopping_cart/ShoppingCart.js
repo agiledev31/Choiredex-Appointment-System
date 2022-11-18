@@ -47,6 +47,11 @@ const ShoppingCart = (props) => {
   const dispatch = useDispatch();
   let location = useLocation();
 
+  const {
+    selectedStore,
+    setSelectedStore,
+  } = props;
+
   const shoppingCartRef = useRef(null);
 
   // In Cart states
@@ -424,9 +429,40 @@ const ShoppingCart = (props) => {
         className="cart_header"
         style={{ display: counter === 0 ? "none" : "flex" }}
       >
-        <h2>MY {saltCaveInCart ? "TREATMENT" : "FACIAL"}</h2>
+        {/* <h2>MY {saltCaveInCart ? "TREATMENT" : "FACIAL"}</h2> */}
+        <h2>MY Partner</h2>
+
       </div>
-      {renderCartFacials()}
+      {/* {renderCartFacials()} */}
+      { selectedStore !== undefined && 
+      <div className="shopping_cart_card_wrapping">
+        <div className="shopping_cart_card_image_circle">
+          <svg width="100%" height="12rem" viewBox="0 0 1000 1000">
+            <circle cx="25" cy="25" r="20" fill="rgb(241, 241, 241)" />
+            <g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">
+              <path d="M4698.5,4911.5c-928-150.5-1641.1-763.2-1956.4-1680.5C2340.8,2070.1,2946.4,400.4,4021.3-323.4C4383.2-563.5,4587.4-628,5003.1-628s616.3,64.5,985.3,308.2c813.4,544.6,1383.1,1662.6,1390.3,2719.6c3.6,616.3-139.8,1060.6-498.1,1565.8C6404.1,4632,5476.1,5033.3,4698.5,4911.5z"/><path d="M2656.1-506.2c-931.6-354.7-1755.7-802.6-2071-1117.9c-129-129-175.6-215-283.1-544.6c-71.7-218.6-150.5-501.6-175.6-634.2c-39.4-211.4-35.8-258,17.9-404.9c426.4-1114.3,3769.4-1802.3,6693.3-1379.5c1601.6,232.9,2794.8,781.1,3024.1,1386.7c71.7,189.9,50.2,365.5-129,942.4c-143.3,458.6-225.7,587.6-519.6,813.4c-297.4,229.3-1286.3,727.4-1913.4,960.3l-444.2,164.8l-164.8-157.7c-326.1-311.7-734.5-544.6-1150.2-652.1c-329.7-86-935.2-60.9-1254.1,50.2c-318.9,111.1-673.6,326.1-928,559c-114.7,107.5-215,197.1-222.2,197.1C3129.1-327,2914.1-405.8,2656.1-506.2z"/>
+            </g>
+          </svg>
+        </div>
+        <div className="shopping_cart_card_description">
+          <div className="cart_card_top_container">
+            <h3 className="shopping_cart_duration">
+              Store Manager: 
+              <span>{selectedStore.manager.first_name} </span>
+              <span>{selectedStore.manager.last_name}</span>
+            </h3>
+          </div>
+          <div className="cart_card_bottom_container">
+            <div className="shopping_cart_price_container">
+              <h4>Store Name: </h4><p className="shopping_cart_price">{selectedStore.name}</p>
+            </div>
+            {/* <div className="shopping_cart_remove_button" onClick={() => setSelectedStore(undefined)}>
+              <p>Remove</p>
+            </div> */}
+          </div>
+        </div>
+      </div>
+      }
       <div
         className="cart_header"
         style={{ display: addOnsArr.length === 0 ? "none" : "flex" }}
@@ -434,14 +470,14 @@ const ShoppingCart = (props) => {
         <h2>MY ADD-ON{addOnsArr.length > 1 ? "S" : null}</h2>
       </div>
       {renderCartAddOns()}
-      <div
+      {/* <div
         className="cart_subtotal"
         style={{ display: counter === 0 ? "none" : "flex" }}
       >
         <p>Cart Subtotal</p>
         <p>${totalPrice}</p>
-      </div>
-      {treatmentsArr.length === 0 || saltCaveInCart ? null : (
+      </div> */}
+      {/* {treatmentsArr.length === 0 || saltCaveInCart ? null : (
         <div className="esthetician_preference_dropdown">
           <FormGroup className="esthetician_preference_formgroup">
             <p>
@@ -475,30 +511,32 @@ const ShoppingCart = (props) => {
             </div>
           </FormGroup>
         </div>
-      )}
-      <Link
-        to={
-          !props.currentScreenSize
-            ? props.initialScreenSize >= 1200
+      )} */}
+      {selectedStore !== undefined && 
+        <Link
+          to={
+            !props.currentScreenSize
+              ? props.initialScreenSize >= 1200
+                ? "/"
+                : "/availability"
+              : props.currentScreenSize >= 1200
               ? "/"
               : "/availability"
-            : props.currentScreenSize >= 1200
-            ? "/"
-            : "/availability"
-        }
-        onClick={availabilityHasBeenClicked}
-        className="search_availability_button_container"
-      >
-        <div
-          className="search_availability_button"
-          style={{
-            display: treatmentsArr.length === 0 ? "none" : "flex",
-            marginTop: counter === 0 ? "0vh" : "2vh",
-          }}
+          }
+          onClick={availabilityHasBeenClicked}
+          className="search_availability_button_container"
         >
-          <p>Search Availability</p>
-        </div>
-      </Link>
+          <div
+            className="search_availability_button"
+            style={{
+              display: treatmentsArr.length === 0 ? "none" : "flex",
+              marginTop: counter === 0 ? "0vh" : "2vh",
+            }}
+          >
+            <p>Search Availability</p>
+          </div>
+        </Link>
+      }
       <Link
         to="/"
         onClick={backToHome}
@@ -508,7 +546,7 @@ const ShoppingCart = (props) => {
           className="continue_shopping_button"
           style={{ marginTop: counter === 0 ? "0vh" : "1.5rem" }}
         >
-          <p>Continue Shopping</p>
+          <p>Back to the stores</p>
         </div>
       </Link>
     </div>

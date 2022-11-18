@@ -30,3 +30,7 @@
     display: flex;
     align-items: center;
 }
+
+.store_item_container {
+    cursor: pointer;
+}

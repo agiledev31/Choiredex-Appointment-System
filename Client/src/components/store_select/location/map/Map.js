@@ -19,8 +19,6 @@ const Map = (props) => {
   } = props;
   // const [position, setPosition] = useState(props.position)
 
-  console.log("props", props.selectedLocation)
-
   return (
     <LoadScript
       googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
@@ -82,19 +80,15 @@ const Map = (props) => {
         )}
 
         {/* display only markers of locations that aren't selected */}
-        {/* {locations?.locations.map((location, index) => {
+        {locations?.map((location, index) => {
           if (location.location_code !== selectedLocation?.location_code) {
             return (
               <Marker
                 key={location.name}
                 // icon={PositionIcon}
-                position={
-                  new IGeographyValue(
-                    locationCoordinatesToPosition(location.coordinates),
-                  )
-                }
+                position={location.coordinates}
                 label={location.name}
-                onClick={(item) => {
+                onClick={(location) => {
                   setSelectLocation({
                     location
                   });
@@ -106,12 +100,12 @@ const Map = (props) => {
           return (
             <Marker
               key="visitor"
-              position={position}
+              position={location.coordinates}
               // icon={VisitorIcon}
-              // animation={google.maps.Animation.DROP}
+              animation={google.maps.Animation.DROP}
             />
           );
-        })} */}
+        })}
       </GoogleMap>
     </LoadScript>
   );

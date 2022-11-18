@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { darken } from "@mui/material/styles";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 
@@ -15,20 +15,32 @@ const LocationsListItem = (props) => {
   } = props;
   const { t } = useTranslation();
 
+  const [selected, setSelected] = useState(false)
+  const selectStore = () => {
+    if(!selected) {
+      setSelectedLocation(location);
+      setSelected(true);
+    }else{
+      setSelectedLocation(undefined);
+      setSelected(false);
+    }
+    console.log("selected location:", location)
+  }
+
   return (
     <>
-      <Box
+      <Box className="store_item_container"
         sx={{
           p: 2,
           backgroundColor: (theme) => {
             if (selectedLocation?.location_code === location.location_code) {
-              return darken(theme.palette.background.default, 0.05);
+              return darken(theme.palette.background.default, 0.08);
             }
             return theme.palette.background.paper;
           },
         }}
         key={`location-${location.location_code}`}
-        onClick={() => setSelectedLocation(location)}
+        onClick={() => selectStore()}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography

@@ -14,6 +14,8 @@ import ACTION_APPOINTMENT_NOTES_VALID from "../../actions/GuestCheckoutForm/Appo
 import ACTION_BOOKING_SUMMARY_NOT_ACTIVE from "../../actions/ContinueToBookingSummaryButtonActive/ACTION_BOOKING_SUMMARY_NOT_ACTIVE";
 import ACTION_TIME_PREFERENCE_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_TIME_PREFERENCE_PAGE_OPENED";
 import ACTION_PAYMENT_INFO_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_PAYMENT_INFO_PAGE_OPENED";
+import ACTION_CONFIRMATION_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_CONFIRMATION_PAGE_OPENED";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -95,7 +97,8 @@ const GuestCheckout = (props) => {
 
   const handleConfirmDetailsButtonClick = () => {
     dispatch(ACTION_BOOKING_SUMMARY_ACTIVE());
-    dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+    // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+    dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
   };
 
   const renderRemainingCharacters = () => {
@@ -272,10 +275,10 @@ const GuestCheckout = (props) => {
               !props.currentScreenSize
                 ? props.initialScreenSize >= 1200
                   ? "/"
-                  : "/paymentinfo"
+                  : "/checkout/confirmation"
                 : props.currentScreenSize >= 1200
                 ? "/"
-                : "/paymentinfo"
+                : "/checkout/confirmation"
             }
             style={{
               display: "block",
@@ -312,7 +315,8 @@ const GuestCheckout = (props) => {
                 transition: "background 0.5s ease, color 0.5s ease",
               }}
             >
-              <p>Payment Details</p>
+              {/* <p>Payment Details</p> */}
+              <p>Continue</p>
             </div>
           </Link>
           <Link
