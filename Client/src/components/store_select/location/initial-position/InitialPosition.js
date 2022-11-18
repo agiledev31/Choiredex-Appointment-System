@@ -13,12 +13,6 @@ const InitialPosition = (props) => {
   const [myPosition, setMyPosition] = useState("")
   const [searchKey, setSearchKey] = useState("")
 
-  useEffect(() => {
-    setTimeout(() => {
-      getPosition();
-      console.log("get position")
-    }, 500)
-  }, [])
   const searchKeyInput = (e) => {
     console.log("searchKey", e.target.value);
     setSearchKey(e.target.value);
@@ -102,6 +96,13 @@ const InitialPosition = (props) => {
     console.log(location)
     props.setPosition(location);
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      getPosition();
+      console.log("get position")
+    }, 1500)
+  }, [])
 
   const clearPosition = () => {
     setSearchKey("");

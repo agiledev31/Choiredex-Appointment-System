@@ -12,22 +12,22 @@ import ACTION_SELECT_TIME_NOT_ACTIVE from "../../actions/SelectTimeActive/ACTION
 import Location from "./location/Location";
 import "./StoreSelect.css";
  
-const locations = [
-  {
-    manager: {
-      first_name: "Pat",
-      last_name: "Lat"
-    },
-    name: "Belle-et-Houllefort",
-    address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
-    coordinates: {
-      lat: 50.745881, 
-      lng: 1.759262,
-    },
-    location_code: "ChIJS7N8uP4z3EcRjMgFQmjNs_0",
-    group_id: 1,
-    countryID: "FR"
-  },
+// const locations = [
+//   {
+//     manager: {
+//       first_name: "Pat",
+//       last_name: "Lat"
+//     },
+//     name: "Belle-et-Houllefort",
+//     address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
+//     coordinates: {
+//       lat: 50.745881, 
+//       lng: 1.759262,
+//     },
+//     location_code: "ChIJS7N8uP4z3EcRjMgFQmjNs_0",
+//     group_id: 1,
+//     countryID: "FR"
+//   },
   // {
   //   manager: {
   //     name: "Pat",
@@ -56,9 +56,26 @@ const locations = [
   //   group_id: 1,
   //   countryID: "York"
   // }
-]
+// ]
 
  const StoreSelect = (props) => {
+  const locations = [
+    {
+      manager: {
+        first_name: "Pat",
+        last_name: "Lat"
+      },
+      name: "Belle-et-Houllefort",
+      address: "Route sans nom, 54530 Bayonville-sur-Mad, France",
+      coordinates: {
+        lat: 50.745881, 
+        lng: 1.759262,
+      },
+      location_code: "ChIJS7N8uP4z3EcRjMgFQmjNs_0",
+      group_id: 1,
+      countryID: "FR"
+    },
+  ]
 
   const dispatch = useDispatch();
 
