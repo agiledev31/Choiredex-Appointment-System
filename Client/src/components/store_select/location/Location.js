@@ -34,12 +34,12 @@ const Location = (props) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Map
+          {/* <Map
             locations={locations}
             position={position}
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
-          />
+          /> */}
         </Grid>
       </Grid>
     </Box>

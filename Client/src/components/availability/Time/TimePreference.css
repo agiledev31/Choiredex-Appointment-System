@@ -322,9 +322,9 @@
 }
 
 /* CSS for Regular Desktops/Small Laptops and Tablets */
-@media only screen and (min-width: 1200px) {
+/* @media only screen and (min-width: 1200px) {
   .select_time_container h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .select_time_forward_arrow,
@@ -393,10 +393,10 @@
     position: relative;
     padding-bottom: 0vh;
   }
-}
+} */
 
 /* CSS for Medium Desktops/Laptops (e.g. Microsoft Surface Pro) */
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1200px) {
   .select_time_container h1 {
     font-size: 1.5rem;
   }

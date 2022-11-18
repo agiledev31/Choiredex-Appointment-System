@@ -12,7 +12,8 @@ import ConsentFormPage6 from "../account/clientprofile/ConsentForm/Pages/Page6/C
 import ConsentFormPage7 from "../account/clientprofile/ConsentForm/Pages/Page7/ConsentFormPage7";
 
 const CheckoutRouter = (props) => {
-  const { path, initialScreenSize, currentScreenSize } = props;
+  console.log("props checkout router", props)
+  const { path, selectedStore, initialScreenSize, currentScreenSize } = props;
 
   const cartPageOpened = useSelector(
     (state) => state.cartPageOpened.cart_page_opened
@@ -37,6 +38,7 @@ const CheckoutRouter = (props) => {
           path={path + "/confirmation"}
           render={() => (
             <ConfirmationPage
+              selectedStore={selectedStore}
               initialScreenSize={initialScreenSize}
               currentScreenSize={currentScreenSize}
             />

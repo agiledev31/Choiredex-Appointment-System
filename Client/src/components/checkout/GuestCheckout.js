@@ -160,18 +160,18 @@ const GuestCheckout = (props) => {
             icon={faChevronLeft}
           />
         </Link>
-        <h1>CHECKOUT</h1>
+        <h1>Register</h1>
         <Link
           to={
             !props.currentScreenSize
               ? props.initialScreenSize >= 1200
                 ? "/"
-                : "/paymentinfo"
+                : "/checkout/confirmation"
               : props.currentScreenSize >= 1200
               ? "/"
-              : "/paymentinfo"
+              : "/checkout/confirmation"
           }
-          onClick={() => dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED())}
+          onClick={() => dispatch(ACTION_CONFIRMATION_PAGE_OPENED())}
         >
           <FontAwesomeIcon
             className="checkout_forward_arrow"

@@ -1,4 +1,8 @@
 /* CSS for Tiny Portrait Screens (e.g. iPhone 5, Galaxy Note 3) */
+.card_description_paragraph {
+  color: #2D7AAF;
+}
+
 @media only screen and (min-width: 300px) {
   .card {
     height: 100%;

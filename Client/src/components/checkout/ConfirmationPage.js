@@ -82,8 +82,11 @@ import ACTION_DAY_OF_THE_WEEK_RESET from "../../actions/SelectedDay/DayOfTheWeek
 import ACTION_IS_STOREPAGE_NOT_ACTIVE from "../../actions/Services/ACTION_IS_STOREPAGE_NOT_ACTIVE";
 import "./ConfirmationPage.css";
 import "../account/clientprofile/ConsentForm/ConsentForm.css";
+import ACTION_TIME_PREFERENCE_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_TIME_PREFERENCE_PAGE_OPENED";
+import ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED from "../../actions/InCart/CartPageOpened/ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED";
 
 const ConfirmationPage = (props) => {
+  console.log("props", props)
   let location = useLocation();
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counterReducer.counter);
@@ -106,9 +109,9 @@ const ConfirmationPage = (props) => {
   const splashScreenComplete = useSelector(
     (state) => state.splashScreenComplete.splashScreenComplete
   );
-  // const consentFormAnythingChanged = useSelector(
-  //   (state) => state.consentFormAnythingChanged.consent_form_anything_changed
-  // );
+  const consentFormAnythingChanged = useSelector(
+    (state) => state.consentFormAnythingChanged.consent_form_anything_changed
+  );
   const saltCaveInCart = useSelector((state) => state.saltCaveInCart.in_cart);
   const firstName = useSelector((state) => state.firstName.first_name);
   const lastName = useSelector((state) => state.lastName.last_name);
@@ -174,7 +177,9 @@ const ConfirmationPage = (props) => {
     const treatmentsPriceArr = treatmentsArr.map((x) => x.price);
     const allPricesArr = addOnsPriceArr.concat(treatmentsPriceArr);
 
-    const sum = allPricesArr.reduce((a, b) => a + b, 0);
+    // const sum = allPricesArr.reduce((a, b) => a + b, 0);
+    // for test;
+    const sum = 30;
 
     if (sum !== totalPrice) {
       dispatch(ACTION_TOTAL_PRICE(sum));
@@ -596,16 +601,49 @@ const ConfirmationPage = (props) => {
       {redirectToHome()}
       <div className="confirmation_page_container_header">
         <Link
-          to={
-            !props.currentScreenSize
-              ? props.initialScreenSize >= 1200
-                ? "/"
-                : "/paymentinfo"
-              : props.currentScreenSize >= 1200
-              ? "/"
-              : "/paymentinfo"
-          }
-          onClick={() => dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED())}
+          // to={
+          //   !props.currentScreenSize
+          //     ? props.initialScreenSize >= 1200
+          //       ? "/"
+          //       : "/paymentinfo"
+          //     : props.currentScreenSize >= 1200
+          //     ? "/"
+          //     : "/paymentinfo"
+          // }
+          // onClick={() => dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED())}
+          to={() => {
+            if (!props.currentScreenSize) {
+              if (props.initialScreenSize >= 1200) {
+                return "/";
+              } else {
+                if (userAuthenticated) {
+                  // return "/paymentinfo";
+                  return "/availability/timepreference";
+                } else {
+                  return "/checkout";
+                }
+              }
+            } else {
+              if (props.currentScreenSize >= 1200) {
+                return "/";
+              } else {
+                if (userAuthenticated) {
+                  // return "/paymentinfo";
+                  return "/availability/timepreference";
+                } else {
+                  return "/checkout";
+                }
+              }
+            }
+          }}
+          onClick={() => {
+            if (userAuthenticated) {
+              // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+              dispatch(ACTION_TIME_PREFERENCE_PAGE_OPENED())
+            } else {
+              dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
+            }
+          }}
         >
           <FontAwesomeIcon
             className="confirmation_page_back_arrow"

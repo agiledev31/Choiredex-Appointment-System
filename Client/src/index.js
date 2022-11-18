@@ -530,9 +530,10 @@ const App = () => {
           Cookies.get("temporary-facebook-dummy-token") ||
         currentAdminDummyToken !== Cookies.get("admin-dummy-token") ||
         temporaryAdminDummyToken !==
-          Cookies.get("temporary-admin-dummy-token") ||
-        currentGuestConsentFormAccessToken !==
-          Cookies.get("guest-consent-form-access-token")
+          Cookies.get("temporary-admin-dummy-token")
+        // ||
+        // currentGuestConsentFormAccessToken !==
+        //   Cookies.get("guest-consent-form-access-token")
       ) {
         currentDummyToken = Cookies.get("dummy-token");
         temporaryFacebookDummyToken = Cookies.get(
@@ -540,9 +541,9 @@ const App = () => {
         );
         currentAdminDummyToken = Cookies.get("admin-dummy-token");
         temporaryAdminDummyToken = Cookies.get("temporary-admin-dummy-token");
-        currentGuestConsentFormAccessToken = Cookies.get(
-          "guest-consent-form-access-token"
-        );
+        // currentGuestConsentFormAccessToken = Cookies.get(
+        //   "guest-consent-form-access-token"
+        // );
 
         if (currentDummyToken) {
           if (!dummyToken) {
@@ -588,13 +589,13 @@ const App = () => {
               dispatch(ACTION_FACEBOOK_COMPLETE_REGISTRATION());
             } else {
               dispatch(ACTION_FACEBOOK_COMPLETE_REGISTRATION_RESET());
-              if (currentGuestConsentFormAccessToken) {
-                dispatch(
-                  ACTION_GUEST_CONSENT_FORM_ACCESS_TOKEN(
-                    jwt.decode(currentGuestConsentFormAccessToken)
-                  )
-                );
-              }
+              // if (currentGuestConsentFormAccessToken) {
+              //   dispatch(
+              //     ACTION_GUEST_CONSENT_FORM_ACCESS_TOKEN(
+              //       jwt.decode(currentGuestConsentFormAccessToken)
+              //     )
+              //   );
+              // }
             }
           }
         }
@@ -1892,7 +1893,10 @@ const App = () => {
               <Route
                 render={() => (
                   <Suspense fallback={renderCartRoutesFallbackLoader()}>
-                    <CheckoutRouter path="/checkout" />
+                    <CheckoutRouter 
+                      path="/checkout"
+                      selectedStore={selectedStore}
+                    />
                   </Suspense>
                 )}
               />

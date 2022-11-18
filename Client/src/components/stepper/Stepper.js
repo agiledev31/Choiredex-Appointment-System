@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import ACTION_IS_STOREPAGE_ACTIVE from "../../actions/Services/ACTION_IS_STOREPAGE_ACTIVE";
 import ACTION_IS_STOREPAGE_NOT_ACTIVE from "../../actions/Services/ACTION_IS_STOREPAGE_NOT_ACTIVE";
+import ACTION_RESET_COUNTER from "../../actions/Counter/ACTION_RESET_COUNTER";
 import "./Stepper.css";
 
 const Stepper = () => {
@@ -23,6 +24,8 @@ const Stepper = () => {
     const [temp, setTemp] = useState(false)
     const switchPrevious = () => {
         dispatch(ACTION_IS_STOREPAGE_NOT_ACTIVE());
+        dispatch(ACTION_RESET_COUNTER());
+
     }
 
     const switchNext = () => {

@@ -104,20 +104,20 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
           location.pathname.includes("privacy") ||
           location.pathname.includes("termsandconditions")
         ) {
-          return "rgb(44,44,52)";
+          return "rgb(0, 38, 65)";
         } else {
           if (navbarToggle) {
-            return "rgb(44,44,52)";
+            return "rgb(0, 38, 65)";
           } else {
             if (props.scrollValue > 5) {
-              return "rgb(44,44,52)";
+              return "rgb(0, 38, 65)";
             } else {
               return "linear-gradient(to right, rgb(251, 251, 251) 0%, rgb(251, 251, 251) 50%, rgb(224, 224, 232) 50.05%, rgb(224, 224, 232) 100%)";
             }
           }
         }
       } else {
-        return "rgb(44,44,52)";
+        return "rgb(0, 38, 65)";
       }
     } else {
       if (

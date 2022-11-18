@@ -131,7 +131,7 @@ const InitialPosition = (props) => {
           <Grid item xs={12}>
             <Box>
               <div className="autocomplete_initial_position_container">
-                <Autocomplete
+                {/* <Autocomplete
                   className="autocomplete_initial_position"
                   apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                   onPlaceSelected={(place) => manualPosition(place)}
@@ -147,7 +147,7 @@ const InitialPosition = (props) => {
                   onClick={() => clearPosition()}
                 >
                   <ClearIcon />
-                </span>
+                </span> */}
               </div>
             </Box>
           </Grid>

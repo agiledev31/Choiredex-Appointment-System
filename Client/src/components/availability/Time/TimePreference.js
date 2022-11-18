@@ -742,7 +742,8 @@ const TimePreference = (props) => {
                 return "/";
               } else {
                 if (userAuthenticated) {
-                  return "/paymentinfo";
+                  // return "/paymentinfo";
+                  return "/checkout/confirmation";
                 } else {
                   return "/checkout";
                 }
@@ -752,7 +753,8 @@ const TimePreference = (props) => {
                 return "/";
               } else {
                 if (userAuthenticated) {
-                  return "/paymentinfo";
+                  // return "/paymentinfo";
+                  return "/checkout/confirmation";
                 } else {
                   return "/checkout";
                 }
@@ -761,7 +763,8 @@ const TimePreference = (props) => {
           }}
           onClick={() => {
             if (userAuthenticated) {
-              dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+              // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+              dispatch(ACTION_CONFIRMATION_PAGE_OPENED())
             } else {
               dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
             }

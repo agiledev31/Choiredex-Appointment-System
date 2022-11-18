@@ -111,6 +111,7 @@ const ShoppingCart = (props) => {
   };
 
   const backToHome = () => {
+    console.log("back to home")
     dispatch(ACTION_CART_IS_NOT_ACTIVE());
     dispatch(ACTION_CART_PAGE_RESET());
   };
@@ -136,7 +137,7 @@ const ShoppingCart = (props) => {
             <h3>No items in your cart</h3>
           </div>
           <p className="cart_statement">
-            You do not have any facial treatments or add-ons in your cart right
+            You do not have any services in your cart right
             now
           </p>
         </>
@@ -434,6 +435,22 @@ const ShoppingCart = (props) => {
 
       </div>
       {/* {renderCartFacials()} */}
+      { counter === 0 && 
+        <>
+          <div className="empty_cart_container">
+            <FontAwesomeIcon
+              className="empty_shopping_cart"
+              color="rgba(211, 211, 211, 0.6)"
+              icon={faShoppingCart}
+            />
+            <h3>No items in your cart</h3>
+          </div>
+          <p className="cart_statement">
+            You do not have any services in your cart right
+            now
+          </p>
+        </>
+      }
       { selectedStore !== undefined && 
       <div className="shopping_cart_card_wrapping">
         <div className="shopping_cart_card_image_circle">

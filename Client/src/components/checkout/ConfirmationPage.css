@@ -1,4 +1,5 @@
 .confirmation_page_container {
+  width: 100%;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -477,7 +478,7 @@
 }
 
 /* CSS for Regular Desktops/Small Laptops and Tablets */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 12000px) {
   .confirmation_page_container h1 {
     font-size: 2.5rem;
   }
@@ -558,7 +559,7 @@
 }
 
 /* CSS for Big Desktops */
-@media only screen and (min-width: 1800px) {
+@media only screen and (min-width: 1200px) {
   .confirmation_page_container h1 {
     font-size: 1.5rem;
   }
@@ -566,12 +567,12 @@
   .confirmation_page_back_arrow {
     font-size: 1.5rem;
     cursor: pointer;
-    left: 3.1rem;
+    /* left: 3.1rem; */
   }
 
   .confirmation_page_header h2 {
     font-size: 1rem;
-    margin-left: 3.1rem;
+    /* margin-left: 3.1rem; */
   }
 
   .confirmation_page_header h3 {
@@ -580,8 +581,8 @@
   }
 
   .confirmation_page_statement {
-    margin-left: 3.1rem;
-    margin-right: 3.1rem;
+    /* margin-left: 3.1rem; */
+    /* margin-right: 3.1rem; */
     font-size: 1.3rem;
     line-height: 1.8rem;
     margin-bottom: 1.5rem;
@@ -631,7 +632,7 @@
 }
 
 /* CSS for Huge Desktops */
-@media only screen and (min-width: 2200px) {
+@media only screen and (min-width: 1800px) {
   .confirmation_page_container h1 {
     font-size: 2.5rem;
   }

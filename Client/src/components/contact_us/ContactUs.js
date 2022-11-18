@@ -69,11 +69,12 @@ const ContactUs = (props) => {
         >
           {(propstyles) => (
             <>
-              <div className="contact_us_map_container" ref={ContactRef}>
+              {/* <div className="contact_us_map_container" ref={ContactRef}>
                 <GoogleMapReact
                   ref={GoogleMapRef}
                   options={mapOptions}
                   onGoogleApiLoaded={({ maps }) => {
+                    console.log("google map api loaded");
                     mapOptions(maps);
                   }}
                   yesIWantToUseGoogleMapApiInternals={true}
@@ -100,7 +101,7 @@ const ContactUs = (props) => {
                     text="Glow Labs"
                   />
                 </GoogleMapReact>
-              </div>
+              </div> */}
               <header className="contact_us_header">
                 <>
                   <h1

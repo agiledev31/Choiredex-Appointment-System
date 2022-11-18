@@ -67,7 +67,7 @@ const AllServices = React.forwardRef((props, ref) => {
                   }}
                   ref={servicesHeaderRef}
                 >
-                  SERVICES
+                  Welcome
                 </h2>
                 <span
                   style={{
