@@ -48,6 +48,10 @@
   margin: 0 auto;
 }
 
+.admin_calendar_top_buttons_container {
+
+}
+
 /* React Big Calendar Style Resets */
 
 .rbc-toolbar {
@@ -146,7 +150,9 @@
     top: 18vh;
     right: 5vw;
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row;
+    align-items: center; */
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
   }
@@ -317,9 +323,9 @@
   .admin_personal_event_container,
   .admin_create_appointment_container {
     height: 100vh;
-    width: 66%;
+    width: 55%;
     top: 18vh;
-    left: 27vw;
+    right: 5vw;
     background: rgb(255, 255, 255);
     position: absolute;
     z-index: 5;

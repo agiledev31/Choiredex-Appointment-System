@@ -263,7 +263,7 @@ const AdminClientIndividualProfile = (props) => {
             icon={faChevronRight}
           />
         </div> */}
-        {props.renderDownloadConsentFormButton(props.item)}
+        {/* {props.renderDownloadConsentFormButton(props.item)} */}
         {props.getEmployeeData ? (
           props.getEmployeeData.employee ? (
             props.getEmployeeData.employee.employeeRole.includes("Admin") ? (

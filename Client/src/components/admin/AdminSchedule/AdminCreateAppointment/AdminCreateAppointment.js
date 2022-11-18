@@ -906,7 +906,7 @@ const AdminCreateAppointment = (props) => {
               />
               <p onClick={handleBackToSchedule}>Back to schedule</p>
               <div className="admin_individual_selected_client_top_page_options">
-                <p
+                {/* <p
                   onClick={() => {
                     changePersonalEventClicked(true);
                     changeCreateAppointmentClicked(false);
@@ -917,8 +917,8 @@ const AdminCreateAppointment = (props) => {
                   }}
                 >
                   Create Personal Event
-                </p>
-                <p>/</p>
+                </p> */}
+                {/* <p>/</p> */}
                 <p className="admin_individual_selected_client_chosen_create_page">
                   Create Appointment
                 </p>

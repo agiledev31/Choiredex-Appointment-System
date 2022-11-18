@@ -364,12 +364,12 @@ const AdminSchedule = (props) => {
             />
           ) : null
         ) : null} */}
-        <div
+        {/* <div
           className="admin_calendar_create_personal_event_button"
           onClick={() => changePersonalEventClicked(true)}
         >
           <p>Create Personal Event</p>
-        </div>
+        </div> */}
         <div
           className="admin_calendar_create_appointment_button"
           onClick={() => changeCreateAppointmentClicked(true)}

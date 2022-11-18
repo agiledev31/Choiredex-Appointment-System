@@ -805,9 +805,9 @@
   }
 
   .admin_side_schedule_calendar_individual_selected_appointment_container {
-    width: 70%;
+    width: 60%;
     top: 16vh;
-    left: 27%;
+    left: 37vw;
     bottom: 0;
     background: white;
     margin-top: 0.5vh;
