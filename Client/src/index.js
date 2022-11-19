@@ -950,7 +950,6 @@ const App = () => {
 
   const redirectToCartRoutes = () => {
     setTimeout(() => {
-      console.log("index", cartIsActive, cartPageOpened)
       if (cartIsActive) {
         if (cartPageOpened === "") {
           return <Redirect to="/" />;

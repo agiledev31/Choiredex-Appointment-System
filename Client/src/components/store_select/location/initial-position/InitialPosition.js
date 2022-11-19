@@ -6,17 +6,15 @@ import {
 } from "@mui/material";
 import NearMeIcon from "@mui/icons-material/NearMe";
 import ClearIcon from '@mui/icons-material/Clear';
-import Autocomplete from "react-google-autocomplete";
+import { Autocomplete } from '@react-google-maps/api';
 
 const InitialPosition = (props) => {
 
+  const [autocompletebody, setAutocompletebody] = useState(null);
   const [myPosition, setMyPosition] = useState("")
   const [searchKey, setSearchKey] = useState("")
 
-  const searchKeyInput = (e) => {
-    console.log("searchKey", e.target.value);
-    setSearchKey(e.target.value);
-  }
+  
 
 
   // If browser supports navigator.geolocation, generate Lat/Long else let user know there is an error
@@ -69,9 +67,27 @@ const InitialPosition = (props) => {
     setMyPosition(address.results[0].formatted_address);
   }
 
+  const onLoad = (e) => {
+    console.log('autocompletebody:', e)
+    setAutocompletebody(e)
+  }
+
+  const onPlaceChanged = () => {
+    if (autocompletebody !== null) {
+      console.log("autocompletebody", autocompletebody.getPlace());
+      manualPosition(autocompletebody.getPlace())
+    } else {
+      console.log('Autocomplete is not loaded yet!')
+    }
+  }
+  
+  const searchKeyInput = (e) => {
+    console.log("searchKey", e.persist());
+    // setSearchKey(e.target.value);
+  }
+
   const manualPosition = (place) => {
     setSearchKey(place.formatted_address);
-    setMyPosition(place.formatted_address);
     getCoordinates(place.formatted_address, process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
   }
 
@@ -97,18 +113,18 @@ const InitialPosition = (props) => {
     props.setPosition(location);
   }
 
+  const clearPosition = () => {
+    setSearchKey("");
+    setMyPosition("")
+    props.setPosition(undefined);
+  }
+
   useEffect(() => {
     setTimeout(() => {
       getPosition();
       console.log("get position")
     }, 1500)
   }, [])
-
-  const clearPosition = () => {
-    setSearchKey("");
-    setMyPosition("")
-    props.setPosition(undefined);
-  }
 
   return (
     <>
@@ -131,25 +147,27 @@ const InitialPosition = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Box>
-              <div className="autocomplete_initial_position_container">
-                {/* <Autocomplete
-                  className="autocomplete_initial_position"
-                  apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                  onPlaceSelected={(place) => manualPosition(place)}
-                  onChange={(e) => searchKeyInput(e)}
-                  options={{
-                    types: ["(regions)"],
-                  }}
-                  value={searchKey}
-                  placeholder="City, Address, Code Postal"
-                />
-                <span 
-                  className="position_clear_btn"
-                  onClick={() => clearPosition()}
-                >
-                  <ClearIcon />
-                </span> */}
-              </div>
+              <Autocomplete
+                className=""
+                onLoad={(e) => onLoad(e)}
+                onPlaceChanged={(e) => onPlaceChanged(e)}
+              >
+                <div className="autocomplete_initial_position_container">
+                  <input
+                    className="autocomplete_initial_position"
+                    type="text"
+                    placeholder="Customized your placeholder"
+                    onChange={(e) => searchKeyInput(e)}
+                    // value = { searchKey }
+                  />
+                  {/* <span 
+                    className="position_clear_btn"
+                    onClick={() => clearPosition()}
+                  >
+                    <ClearIcon />
+                  </span> */}
+                </div>
+              </Autocomplete>
             </Box>
           </Grid>
         </Grid>

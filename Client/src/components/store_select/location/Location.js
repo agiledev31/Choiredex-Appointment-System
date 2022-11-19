@@ -20,13 +20,13 @@ const Location = (props) => {
     setSelectedLocation,
     } = props
 
-  const [mapView, setMapView] = useState(false)
-  // use
+  const [libraries, setLibraries] = useState(["places"]);
   
   return (
     <Box>
       <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        libraries={libraries}
       >
         <Grid container spacing={8}>
           <Grid item xs={12} md={6}>
