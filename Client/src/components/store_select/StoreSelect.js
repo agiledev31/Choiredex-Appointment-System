@@ -59,7 +59,6 @@ const locations = [
 ]
 
  const StoreSelect = (props) => {
-
   const dispatch = useDispatch();
 
   // store in cart
