@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Client = require("./client");
+const Store = require("./store");
 const Schema = mongoose.Schema;
 const addOnSchema = require("./addon");
 
@@ -14,9 +15,10 @@ const AppointmentSchema = new Schema({
   duration: Number,
   price: Number,
   createdAt: { type: Date, default: currentDate },
-  bookedWithCardSquareID: String,
+  // bookedWithCardSquareID: String,
   client: Client.schema.obj,
   esthetician: String,
+  store: Store.schema.obj,
   treatments: [{ name: String, price: Number, duration: Number }],
   addOns: [addOnSchema.schema.obj],
   confirmed: { type: Boolean, default: false },

@@ -164,6 +164,32 @@ const AdminMenu = (props) => {
             <h2>STAFF</h2>
           </Link>
         </div>
+        <div className="admin_men_box_container">
+          <Link
+            className="admin_menu_box_container_link"
+            to="/admin/service"
+            onClick={handleAdminResetNotifications}
+          >
+            <FontAwesomeIcon
+              icon={faBriefcase}
+              className="admin_menu_box_icon"
+            />
+            <h2>Service</h2>
+          </Link>
+        </div>
+        <div className="admin_men_box_container">
+          <Link
+            className="admin_menu_box_container_link"
+            to="/admin/store"
+            onClick={handleAdminResetNotifications}
+          >
+            <FontAwesomeIcon
+              icon={faBriefcase}
+              className="admin_menu_box_icon"
+            />
+            <h2>Store</h2>
+          </Link>
+        </div>
         <div className="admin_menu_box_container">
           <Link
             className="admin_menu_box_container_link"

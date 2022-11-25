@@ -15,7 +15,6 @@ import { Transition } from "react-spring/renderprops";
 import imageCompression from "browser-image-compression";
 import ImageUploader from "react-images-upload";
 import Camera, { IMAGE_TYPES } from "react-html5-camera-photo";
-import { useMutation } from "@apollo/react-hooks";
 import updateAdminProfilePictureMutation from "../../../graphql/mutations/updateAdminProfilePictureMutation";
 import LZString from "lz-string";
 import { css } from "@emotion/css";
@@ -24,6 +23,9 @@ import AdminStaffIndividualProfile from "./AdminStaffIndividualProfile";
 import AdminAddStaffMember from "./AdminAddStaffMember";
 import AdminRenderUpcomingAppointments from "../AdminClients/AdminRenderUpcomingAppointments";
 import AdminRenderPastAppointments from "../AdminClients/AdminRenderPastAppointments";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import getAllRolesQuery from "../../../graphql/queries/getAllRolesQuery";
+import getAllStoresQuery from "../../../graphql/queries/getAllStoresQuery";
 import moment from "moment";
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
 import ACTION_SPLASH_SCREEN_HALFWAY from "../../../actions/SplashScreenHalfway/ACTION_SPLASH_SCREEN_HALFWAY";
@@ -55,6 +57,24 @@ const AdminStaff = (props) => {
     randomColorArray,
     resetNotifications,
   } = props;
+  
+  const {
+    data: getAllRolesData,
+    refetch: getAllRolesRefetch,
+    loading: getAllRolesLoading,
+    error: getAllRolesError,
+  } = useQuery(getAllRolesQuery, {
+    fetchPolicy: "no-cache",
+  });
+  const {
+    data: getAllStoresData,
+    refetch: getAllStoresRefetch,
+    loading: getAllStoresLoading,
+    error: getAllStoresError,
+  } = useQuery(getAllStoresQuery, {
+    fetchPolicy: "no-cache",
+  });
+  console.log("getAllRolesData", getAllRolesData, getAllStoresData);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -409,7 +429,7 @@ const AdminStaff = (props) => {
   };
 
   const handleProfilePictureRender = (item) => {
-    if (item.profilePicture) {
+    if (!!item.profilePicture) {
       return (
         <img
           className="admin_individual_client_picture_profile_avatar"
@@ -581,7 +601,7 @@ const AdminStaff = (props) => {
       </FormGroup>
       <div
         className="admin_clients_content_container"
-        style={{ height: "55vh", overflow: "scroll", marginTop: "2vh" }}
+        style={{ height: "55vh", overflow: "auto", marginTop: "2vh"}}
       >
         {getEmployeesData
           ? getEmployeesData.employees.length > 0
@@ -827,41 +847,14 @@ const AdminStaff = (props) => {
                         </p>
                         <p>{item.phoneNumber ? item.phoneNumber : null}</p>
                       </div>
-                      <span className="admin_individual_client_spacer" />
-                      <FontAwesomeIcon
-                        style={{
-                          zIndex: employeeToggled
-                            ? logoutClicked ||
-                              addProfilePhotoClicked ||
-                              loadingSpinnerActive ||
-                              imageLoading ||
-                              cancelAppointmentClicked
-                              ? -1
-                              : 0
-                            : loadingSpinnerActive
-                            ? -1
-                            : logoutClicked ||
-                              addProfilePhotoClicked ||
-                              imageLoading ||
-                              cancelAppointmentClicked
-                            ? 0
-                            : 5,
-                          transitionDelay:
-                            logoutClicked || loadingSpinnerActive
-                              ? "initial"
-                              : !employeeToggled
-                              ? "0.5s"
-                              : "initial",
-                        }}
-                        icon={faEllipsisH}
-                        className="admin_individual_client_expand_icon"
-                      />
                       {addStaffMemberClicked ? (
                         <AdminAddStaffMember
                           handleProfilePictureRender={
                             handleProfilePictureRender
                           }
                           renderBarInContactInfo={renderBarInContactInfo}
+                          getAllRolesData={getAllRolesData}
+                          getAllStoresData={getAllStoresData}
                           getClientsData={getClientsData}
                           getEmployeesRefetch={getEmployeesRefetch}
                           addStaffMemberClicked={addStaffMemberClicked}

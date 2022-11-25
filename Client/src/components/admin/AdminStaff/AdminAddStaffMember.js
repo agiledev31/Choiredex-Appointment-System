@@ -34,6 +34,7 @@ const AdminAddStaffMember = (props) => {
   const otherRoleRef = useRef(null);
 
   const {
+    getAllRolesData,
     addStaffMemberClicked,
     changeAddStaffMemberClicked,
     getEmployeesRefetch,
@@ -616,14 +617,8 @@ const AdminAddStaffMember = (props) => {
                 <div className="admin_create_appointment_input_information_container">
                   <div className="admin_create_appointment_label">Role(s)</div>
                   <Dropdown
-                    options={[
-                      "Admin",
-                      "Esthetician",
-                      "Massage Therapist",
-                      "Wax Specialist",
-                      "Service Provider",
-                      "Other",
-                    ].filter((x) => !adminStaffMemberRoles.includes(x))}
+                    options={getAllRolesData.all_roles.map(item => item.name)
+                      .filter((x) => !adminStaffMemberRoles.includes(x))}
                     onChange={(choice) => {
                       resetAllErrorStates();
 

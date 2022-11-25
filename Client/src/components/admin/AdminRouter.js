@@ -5,8 +5,12 @@ import AdminMenu from "./AdminMenu/AdminMenu";
 import AdminClients from "./AdminClients/AdminClients";
 import AdminSchedule from "./AdminSchedule/AdminSchedule";
 import AdminStaff from "./AdminStaff/AdminStaff";
+import AdminService from "./AdminService/AdminService";
+import AdminStore from "./AdminStore/AdminStore";
 import AdminNotifications from "./AdminNotifications/AdminNotifications";
 import { useMutation, useQuery } from "@apollo/react-hooks";
+import getAllServicesQuery from "../../graphql/queries/getAllServicesQuery";
+import getAllStoresQuery from "../../graphql/queries/getAllStoresQuery";
 import getClientsQuery from "../../graphql/queries/getClientsQuery";
 import getAllAppointmentsQuery from "../../graphql/queries/getAllAppointmentsQuery";
 import getAllPersonalEventsQuery from "../../graphql/queries/getAllPersonalEventsQuery";
@@ -53,6 +57,24 @@ const AdminRouter = React.forwardRef((props, ref) => {
   } = props;
 
   const {
+    data: getAllServicesData,
+    refetch: getAllServicesRefetch,
+    loading: getAllServicesLoading,
+    error: getAllServicesError,
+  } = useQuery(getAllServicesQuery, {
+    fetchPolicy: "no-cache",
+  });
+
+  const {
+    data: getAllStoresData,
+    refetch: getAllStoresRefetch,
+    loading: getAllStoresLoading,
+    error: getAllStoresError,
+  } = useQuery(getAllStoresQuery, {
+    fetchPolicy: "no-cache",
+  });
+
+  const {
     data: getClientsData,
     refetch: getClientsRefetch,
     loading: getClientsLoading,
@@ -85,7 +107,15 @@ const AdminRouter = React.forwardRef((props, ref) => {
     if (getClientsData) {
       if (getClientsData.clients.length > 0) {
         return randomColor({
-          count: getClientsData.clients.length,
+          count: getClientsData.clients.length + getEmployeesData.employees.length,
+          hue: "#0081B1",
+          format: "rgba",
+          luminosity: "dark",
+          alpha: 0.7,
+        });
+      }else if(getEmployeesData.employees.length > 0){
+        return randomColor({
+          count: getEmployeesData.employees.length,
           hue: "#0081B1",
           format: "rgba",
           luminosity: "dark",
@@ -93,7 +123,7 @@ const AdminRouter = React.forwardRef((props, ref) => {
         });
       }
     }
-  }, [getClientsData]);
+  }, [getClientsData, getEmployeesData]);
 
   const [resetNotifications] = useMutation(resetNotificationsMutation);
 
@@ -250,6 +280,45 @@ const AdminRouter = React.forwardRef((props, ref) => {
               getEmployeesRefetch={getEmployeesRefetch}
               getAllAppointmentsData={getAllAppointmentsData}
               getAllAppointmentsRefetch={getAllAppointmentsRefetch}
+              randomColorArray={randomColorArray ? randomColorArray : null}
+              resetNotifications={resetNotifications}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={path + "/service"}
+          render={() => (
+            <AdminService
+              initialScreenSize={initialScreenSize}
+              currentScreenSize={currentScreenSize}
+              getEmployeeData={getEmployeeData ? getEmployeeData : null}
+              getEmployeeError={getEmployeeError}
+              employeeDataRefetch={employeeDataRefetch}
+              getAllServicesData={getAllServicesData}
+              getAllServicesRefetch={getAllServicesRefetch}
+              getAllServicesLoading={getAllServicesLoading}
+              getAllServicesError={getAllServicesError}
+              randomColorArray={randomColorArray ? randomColorArray : null}
+              resetNotifications={resetNotifications}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={path + "/store"}
+          render={() => (
+            <AdminStore
+              initialScreenSize={initialScreenSize}
+              currentScreenSize={currentScreenSize}
+              getEmployeeData={getEmployeeData ? getEmployeeData : null}
+              getEmployeeError={getEmployeeError}
+              employeeDataRefetch={employeeDataRefetch}
+              getAllServicesData={getAllServicesData}
+              getAllStoresData={getAllStoresData}
+              getAllStoresRefetch={getAllStoresRefetch}
+              getAllStoresLoading={getAllStoresLoading}
+              getAllStoresError={getAllStoresError}
               randomColorArray={randomColorArray ? randomColorArray : null}
               resetNotifications={resetNotifications}
             />

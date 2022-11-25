@@ -24,6 +24,7 @@ import ACTION_ADMIN_CLIENT_PAST_APPOINTMENTS_SELECTED from "../../../actions/Adm
 import ACTION_ADD_PROFILE_PHOTO_CLICKED from "../../../actions/Admin/AddProfilePhotoClicked/ACTION_ADD_PROFILE_PHOTO_CLICKED";
 
 const AdminStaffIndividualProfile = (props) => {
+
   const dispatch = useDispatch();
   const loadingSpinnerActive = useSelector(
     (state) => state.loadingSpinnerActive.loading_spinner
