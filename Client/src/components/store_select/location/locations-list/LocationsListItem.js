@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { darken } from "@mui/material/styles";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from "react";
+// import { useTranslation } from "react-i18next";
 
 
 const LocationsListItem = (props) => {
@@ -13,10 +13,42 @@ const LocationsListItem = (props) => {
     setSelectedLocation,
     location,
     calculateDistance,
-    calculateTravelTime,
     position,
+    travelMode,
   } = props;
-  const { t } = useTranslation();
+
+  const [travelTime, changeTravelTime] = useState("Can't calculate ravel time");
+
+  const calculateTravelTime = (position, store) => {
+    console.log("origin :", position.coordinates.lat, "::", position.coordinates.lng, "::", ":"+parseFloat(store.coordinateLat)+":", "::", parseFloat(store.coordinateLng))
+    var origin = new google.maps.LatLng( position.coordinates.lat, position.coordinates.lng ); // using google.maps.LatLng class
+    var destination = new google.maps.LatLng(parseFloat(store.coordinateLat), parseFloat(store.coordinateLng)); // using string
+    
+    // var haight = new google.maps.LatLng(37.7699298, -122.4469157);
+    // var oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
+
+    // var haight = new google.maps.LatLng(63.3144252, 105.4182488);
+    // var oceanBeach = new google.maps.LatLng(61.52401, 105.318757);
+
+    var directionsService = new google.maps.DirectionsService();
+
+    var request = {
+      origin: origin, // LatLng|string
+      destination: destination, // LatLng|string
+      travelMode: travelMode
+    };
+
+    directionsService.route( request, function( response, status ) {
+      if ( status === 'OK' ) {
+        var point = response.routes[ 0 ].legs[ 0 ];
+        console.log(status, "point", response);
+        console.log("result", point.duration.text)
+        changeTravelTime(point.duration.text);
+      } else {
+        changeTravelTime("Can't calculate ravel time");
+      }
+    });
+  }
 
   const selectStore = () => {
     if(selectedLocation !== location) {
@@ -41,6 +73,7 @@ const LocationsListItem = (props) => {
         key={`location-${location._id}`}
         onClick={() => selectStore()}
       >
+        {calculateTravelTime(position, location)}
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             component="span"
@@ -68,7 +101,7 @@ const LocationsListItem = (props) => {
                 {calculateDistance(position, location)} km
               </Typography>
               <Typography variant="body2" color="textPrimary">
-                {calculateTravelTime(position, location)}
+                {travelTime}
               </Typography>
             </Box>
           </>

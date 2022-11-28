@@ -18,6 +18,7 @@ const LocationsList = (props) => {
     calculateDistance,
     calculateTravelTime,
     position,
+    travelMode,
   } = props;
 
   return (
@@ -36,6 +37,7 @@ const LocationsList = (props) => {
             calculateDistance={calculateDistance}
             calculateTravelTime={calculateTravelTime}
             position={position}
+            travelMode={travelMode}
           />
         ))}
       </List>

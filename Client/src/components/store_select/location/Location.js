@@ -30,24 +30,33 @@ const Location = (props) => {
   }
 
   const calculateTravelTime = (position, store) => {
+    console.log("origin :", position.coordinates.lat, "::", position.coordinates.lng, "::", ":"+parseFloat(store.coordinateLat)+":", "::", parseFloat(store.coordinateLng))
     var origin = new google.maps.LatLng( position.coordinates.lat, position.coordinates.lng ); // using google.maps.LatLng class
-    var destination = new google.maps.LatLng(parseFloat(store.coordinateLat), parseFloat(store.coordinateLat)); // using string
+    var destination = new google.maps.LatLng(parseFloat(store.coordinateLat), parseFloat(store.coordinateLng)); // using string
     
+    var haight = new google.maps.LatLng(37.7699298, -122.4469157);
+    var oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
+
+    // var haight = new google.maps.LatLng(63.3144252, 105.4182488);
+    // var oceanBeach = new google.maps.LatLng(61.52401, 105.318757);
+
     var directionsService = new google.maps.DirectionsService();
 
     var request = {
-      origin: origin, // LatLng|string
-      destination: destination, // LatLng|string
+      origin: haight, // LatLng|string
+      destination: oceanBeach, // LatLng|string
       travelMode: travelMode
     };
 
     directionsService.route( request, function( response, status ) {
-      // if ( status === 'OK' ) {
-          // var point = response.routes[ 0 ].legs[ 0 ];
-          // console.log( 'Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')' );
-          console.log(status, "point", response);
-          // return point.duration.text;
-      // }
+      if ( status === 'OK' ) {
+        var point = response.routes[ 0 ].legs[ 0 ];
+        console.log(status, "point", response);
+        console.log("result", point.duration.text)
+          return point.duration.text;
+      } else {
+        return "Can't calculate ravel time";
+      }
     });
   }
   
