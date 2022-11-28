@@ -1,15 +1,15 @@
 const graphql = require("graphql");
 
 const {
-  GraphQLObjectType,
   GraphQLString,
   GraphQLID,
   GraphQLFloat,
   GraphQLList,
+  GraphQLInputObjectType,
 } = graphql;
 
-const StoreType = new GraphQLObjectType({
-  name: "StoreType",
+const StoreInput = new GraphQLInputObjectType({
+  name: "StoreInput",
   fields: () => ({
     _id: {
       type: GraphQLID,
@@ -29,4 +29,4 @@ const StoreType = new GraphQLObjectType({
   }),
 });
 
-module.exports = StoreType;
+module.exports = StoreInput;

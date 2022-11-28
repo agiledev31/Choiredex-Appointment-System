@@ -53,6 +53,20 @@
   content: "Staff member assigned role";
 }
 
+.admin_add_store_dropdown_placeholder_no_time::before {
+  background: #fff;
+  position: absolute;
+  color: #fff;
+  content: "*****************************************";
+}
+
+.admin_add_store_dropdown_placeholder_no_time::after {
+  position: absolute;
+  left: 1.5rem;
+  color: rgb(122, 122, 122);
+  content: "Store service";
+}
+
 .admin_individual_selected_employee_contents {
   height: 100%;
   width: 100%;

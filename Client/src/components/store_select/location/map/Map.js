@@ -2,8 +2,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import { LoadScript, GoogleMap, Polyline, InfoWindow, Marker } from "@react-google-maps/api";
-import React, { useState } from "react";
+import { GoogleMap, Polyline, InfoWindow, Marker } from "@react-google-maps/api";
+import React from "react";
 
 export const containerStyle = {
   minHeight: "500px",
@@ -16,13 +16,10 @@ const Map = (props) => {
     locations,
     selectedLocation,
     setSelectedLocation,
+    calculateDistance,
   } = props;
-  // const [position, setPosition] = useState(props.position)
 
   return (
-    // <LoadScript
-    //   googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-    // >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={position?.coordinates}
@@ -34,7 +31,10 @@ const Map = (props) => {
           <Marker
             key="target"
             label={selectedLocation.name}
-            position={selectedLocation.coordinates}
+            position={{
+              lat: parseFloat(selectedLocation.coordinateLat),
+              lng: parseFloat(selectedLocation.coordinateLng)
+            }}
             animation={google.maps.Animation.DROP}
           />
         )}
@@ -43,7 +43,13 @@ const Map = (props) => {
         {selectedLocation !== undefined && (
           <Polyline
             key="polyline"
-            path={[position.coordinates, selectedLocation.coordinates]}
+            path={[
+              position == undefined ? {lat: 0, lng: 0} : position.coordinates, 
+              {
+                lat: parseFloat(selectedLocation.coordinateLat),
+                lng: parseFloat(selectedLocation.coordinateLng)
+              }
+            ]}
             options={{
               strokeColor: red["700"],
             }}
@@ -54,7 +60,10 @@ const Map = (props) => {
         {selectedLocation !== undefined && (
           <InfoWindow
             key={""}
-            position={selectedLocation.coordinates}
+            position={{
+              lat: parseFloat(selectedLocation.coordinateLat),
+              lng: parseFloat(selectedLocation.coordinateLng)
+            }}
             onCloseClick={function () {
               setSelectedLocation(undefined);
             }}
@@ -67,13 +76,9 @@ const Map = (props) => {
                 <Typography key="address" variant="subtitle2">
                   {selectedLocation.address}
                 </Typography>
-                {/* {selectedLocation.direction !== undefined && (
-                  <>
-                    <Typography key="distance" variant="subtitle2">
-                      {humanizeDistance(selectedLocation.direction.distance, t)}
-                    </Typography>
-                  </>
-                )} */}
+                <Typography key="distance" variant="subtitle2">
+                  {calculateDistance(position, selectedLocation)} km
+                </Typography>
               </Box>
             </>
           </InfoWindow>
@@ -81,12 +86,15 @@ const Map = (props) => {
 
         {/* display only markers of locations that aren't selected */}
         {locations?.map((location, index) => {
-          if (location.location_code !== selectedLocation?.location_code) {
+          if (location._id !== selectedLocation?._id) {
             return (
               <Marker
-                key={location.name}
+                key={location._id}
                 // icon={PositionIcon}
-                position={location.coordinates}
+                position={{
+                lat: parseFloat(location.coordinateLat),
+                lng: parseFloat(location.coordinateLng)
+              }}
                 label={location.name}
                 onClick={(location) => {
                   setSelectLocation({
@@ -99,15 +107,16 @@ const Map = (props) => {
 
           return (
             <Marker
-              key="visitor"
-              position={location.coordinates}
-              // icon={VisitorIcon}
+              key={location._id}
+              position={{
+                lat: parseFloat(location.coordinateLat),
+                lng: parseFloat(location.coordinateLng)
+              }}
               animation={google.maps.Animation.DROP}
             />
           );
         })}
       </GoogleMap>
-    // </LoadScript>
   )
 };
 export default Map;

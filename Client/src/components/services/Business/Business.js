@@ -53,6 +53,9 @@ const Business = (props) => {
   const [cartClicked, changeCartClicked] = useState(false);
   const [bookNowButtonHovered, changeBookNowButtonHovered] = useState(false);
 
+  console.log("clarifyToggle", clarifyToggle);
+  console.log("clarifyInCart", clarifyInCart);
+
   const dispatch = useDispatch();
 
   const handleToggle = () => {
@@ -385,7 +388,7 @@ const Business = (props) => {
         }}
       >
         <p className="card_toggler" onClick={handleToggle}>
-          {/* {clarifyToggle ? "SEE DESCRIPTION" : "LEARN MORE"} */}
+          {clarifyToggle ? "SEE DESCRIPTION" : "LEARN MORE"}
         </p>
         <span className="card_bottom_spacer" />
         {bookButtonBounce()}

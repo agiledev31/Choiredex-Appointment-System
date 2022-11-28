@@ -17,12 +17,12 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import RootReducer from "./RootReducer";
 import LandingPage from "./components/landing_page/LandingPage";
-import FollowUs from "./components/follow_us/FollowUs";
+// import FollowUs from "./components/follow_us/FollowUs";
 import ContactUs from "./components/contact_us/ContactUs";
 import Stepper from "./components/stepper/Stepper";
 import AllServices from "./components/all_services/AllServices";
-import AllTreatments from "./components/all_treatments/AllTreatments";
-import AllAddOns from "./components/all_add_ons/AllAddOns";
+// import AllTreatments from "./components/all_treatments/AllTreatments";
+// import AllAddOns from "./components/all_add_ons/AllAddOns";
 import ShoppingCart from "./components/shopping_cart/ShoppingCart";
 import StoreSelect from "./components/store_select/StoreSelect";
 import * as smoothscroll from "smoothscroll-polyfill";
@@ -41,6 +41,8 @@ import { toast } from "react-toastify";
 import getClientQuery from "./graphql/queries/getClientQuery";
 import getEmployeeQuery from "./graphql/queries/getEmployeeQuery";
 import getEmployeesQuery from "./graphql/queries/getEmployeesQuery";
+import getAllStoresQuery from "./graphql/queries/getAllStoresQuery";
+import getAllServicesQuery from "./graphql/queries/getAllServicesQuery";
 import updateClientInvalidateTokensMutation from "./graphql/mutations/updateClientInvalidateTokensMutation";
 import updateEmployeeInvalidateTokensMutation from "./graphql/mutations/updateEmployeeInvalidateTokensMutation";
 import getUpdatedEmployeeSubscription from "./graphql/subscriptions/getUpdatedEmployeeSubscription";
@@ -188,7 +190,6 @@ const store = createStore(
 const App = () => {
   const location = useLocation();
 
-  const [selectedStore, setSelectedStore] = useState(undefined);
   const storePageActive = useSelector(
     (state) => state.storePageActive.storePageActive
   );
@@ -275,6 +276,32 @@ const App = () => {
   const adminNotifications = useSelector(
     (state) => state.adminNotifications.notifications
   );
+
+  const {
+    data: getAllServicesData,
+    refetch: getAllServicesRefetch,
+    loading: getAllServicesLoading,
+    error: getAllServicesError,
+  } = useQuery(getAllServicesQuery, {
+    fetchPolicy: "no-cache",
+  });
+
+  const {
+    data: getAllStoresData,
+    refetch: getAllStoresRefetch,
+    loading: getAllStoresLoading,
+    error: getAllStoresError,
+  } = useQuery(getAllStoresQuery, {
+    fetchPolicy: "no-cache",
+  });
+
+  const [selectedServiceName, changeSelectedServiceName] = useState("");
+  const [selectedStore, changeSelectedStore] = useState(undefined);
+  const [managerOfSelectedStore, changeManagerOfSelectedStore] = useState(undefined);
+  useEffect(() => {
+    console.log("selected store change", selectedStore);
+  }, [selectedStore])
+
 
   const [loadingSpinnerActive, changeLoadingSpinnerActive] = useState(false);
   const [treatmentsPageInView, changeTreatmentsPageInView] = useState(false);
@@ -1132,7 +1159,7 @@ const App = () => {
       return (
         <ShoppingCart
           selectedStore={selectedStore}
-          setSelectedStore={setSelectedStore}
+          changeSelectedStore={changeSelectedStore}
           currentScreenSize={currentScreenSize}
           initialScreenSize={initialScreenSize}
           getEmployeesData={getEmployeesData}
@@ -1740,7 +1767,10 @@ const App = () => {
                 ref={ref}
                 name="landing_page"
               />
-              <Stepper />
+              <Stepper 
+                selectedServiceName={selectedServiceName}
+                selectedStore={selectedStore}
+              />
               {!storePageActive && 
                 <AllServices
                   name="treatments"
@@ -1756,13 +1786,24 @@ const App = () => {
                   }
                   treatmentsPageInView={treatmentsPageInView}
                   scrollValue={scrollValue}
+                  getAllServicesData={getAllServicesData}
+                  getAllServicesRefetch={getAllServicesRefetch}
+                  getAllServicesLoading={getAllServicesLoading}
+                  getAllServicesError={getAllServicesError}
+                  selectedServiceName={selectedServiceName}
+                  changeSelectedServiceName={changeSelectedServiceName}
                 />
               }
               {storePageActive && 
-                <StoreSelect 
+                <StoreSelect
+                  selectedServiceName={selectedServiceName}
                   selectedStore={selectedStore}
-                  setSelectedStore={setSelectedStore}
+                  changeSelectedStore={changeSelectedStore}
                   resetAllCartStates={resetAllCartStates}
+                  getAllStoresData={getAllStoresData}
+                  getAllStoresRefetch={getAllStoresRefetch}
+                  getAllStoresLoading={getAllStoresLoading}
+                  getAllStoresError={getAllStoresError}
                 />
               }
               {/* <AllTreatments
@@ -1828,6 +1869,7 @@ const App = () => {
                 <Suspense fallback={renderCartRoutesFallbackLoader()}>
                   <AvailabilityRouter
                     path="/availability"
+                    selectedStore={selectedStore}
                     getEmployeesData={getEmployeesData}
                     initialScreenSize={initialScreenSize}
                     currentScreenSize={currentScreenSize}

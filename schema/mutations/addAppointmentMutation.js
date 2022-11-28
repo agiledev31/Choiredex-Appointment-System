@@ -1,9 +1,8 @@
 const graphql = require("graphql");
 const mongoose = require("mongoose");
 const AppointmentType = require("../types/AppointmentType");
-const AddOnInput = require("../types/inputs/AddOnInput");
 const ClientInput = require("../types/inputs/ClientInput");
-const TreatmentInput = require("../types/inputs/TreatmentInput");
+const StoreInput = require("../types/inputs/StoreInput");
 const Client = require("../../models/client");
 const Appointment = require("../../models/appointment");
 const moment = require("moment");
@@ -40,10 +39,8 @@ const addAppointmentMutation = {
     duration: { type: new GraphQLNonNull(GraphQLInt) },
     price: { type: new GraphQLNonNull(GraphQLInt) },
     client: { type: new GraphQLList(ClientInput) },
+    store: { type: new GraphQLList(StoreInput) },
     esthetician: { type: new GraphQLNonNull(GraphQLString) },
-    treatments: { type: new GraphQLList(TreatmentInput) },
-    addOns: { type: new GraphQLList(AddOnInput) },
-    bookedWithCardSquareID: { type: GraphQLString },
     notes: { type: GraphQLString },
   },
   async resolve(parent, args, context) {
@@ -53,32 +50,14 @@ const addAppointmentMutation = {
     });
 
     let appt_res;
+    console.log("store", args.store)
 
     const createEventObject = (appointment) => {
       const eventObject = {
         title: "Glow Labs Appointment",
         location: "1506 Broadway, Hewlett, NY 11557",
         description: appointment
-          ? (appointment.treatments[0].name
-              ? appointment.treatments[0].name === "ChemicalPeel"
-                ? "Chemical Peel"
-                : appointment.treatments[0].name
-              : "") +
-            (appointment.treatments[0].name.includes("Salt Cave")
-              ? " Treatment"
-              : " Facial") +
-            (appointment.addOns[0]
-              ? appointment.addOns[0].name
-                ? ", " +
-                  appointment.addOns
-                    .map((x) =>
-                      x.name === "ExtraExtractions"
-                        ? "Extra Extractions Add On"
-                        : x.name + " Add On"
-                    )
-                    .join(", ")
-                : ""
-              : "")
+          ? appointment.store.name + "in" + appointment.store.address
           : "",
         start: appointment
           ? moment(
@@ -198,8 +177,8 @@ const addAppointmentMutation = {
       endTime: args.endTime,
       duration: args.duration,
       price: args.price,
+      store: args.store[0],
       esthetician: args.esthetician,
-      bookedWithCardSquareID: args.bookedWithCardSquareID,
       createdAt: args.createdAt,
       client: foundClient
         ? auth !== undefined && !adminToken
@@ -226,8 +205,6 @@ const addAppointmentMutation = {
             email: args.client[0].email,
             phoneNumber: args.client[0].phoneNumber,
           },
-      treatments: args.treatments,
-      addOns: args.addOns === [] ? null : args.addOns,
       notes: args.notes === "" ? null : args.notes,
       confirmed: false,
     });
@@ -264,8 +241,6 @@ const addAppointmentMutation = {
         lastName: args.client[0].lastName,
         email: args.client[0].email,
         phoneNumber: args.client[0].phoneNumber,
-        squareCustomerId: args.client[0].squareCustomerId,
-        unsavedSquareCardIDs: [args.client[0].unsavedSquareCardIDs],
       });
 
       const emailTaken = await Client.findOne({
@@ -338,13 +313,6 @@ const addAppointmentMutation = {
             date: appt_res.date,
             day: moment(appt_res.date, "LL").format("dddd"),
             startTime: appt_res.startTime + " " + appt_res.morningOrEvening,
-            treatment: appt_res.treatments[0].name.includes("Salt Cave")
-              ? "Salt Cave"
-              : appt_res.treatments[0].name === "ChemicalPeel"
-              ? "Chemical Peel with " + appt_res.esthetician
-              : appt_res.treatments[0].name +
-                " Facial with " +
-                appt_res.esthetician,
             eventCalendarLink: client_res.email
               .toLowerCase()
               .includes("yahoo.com")
@@ -416,7 +384,6 @@ const addAppointmentMutation = {
             email: client_res.email,
             phoneNumber: client_res.phoneNumber,
             consentForm: client_res.consentForm,
-            squareCustomerId: client_res.squareCustomerId,
           },
           date: appt_res.date,
           startTime: appt_res.startTime,
@@ -424,9 +391,7 @@ const addAppointmentMutation = {
           endTime: appt_res.endTime,
           duration: appt_res.duration,
           price: appt_res.price,
-          treatments: appt_res.treatments,
-          addOns: appt_res.addOns,
-          bookedWithCardSquareID: appt_res.bookedWithCardSquareID,
+          store: args.store[0],
           notes: appt_res.notes,
           confirmed: appt_res.confirmed,
         };
@@ -452,13 +417,6 @@ const addAppointmentMutation = {
           date: appt_res.date,
           day: moment(appt_res.date, "LL").format("dddd"),
           startTime: appt_res.startTime + " " + appt_res.morningOrEvening,
-          treatment: appt_res.treatments[0].name.includes("Salt Cave")
-            ? "Salt Cave"
-            : appt_res.treatments[0].name === "ChemicalPeel"
-            ? "Chemical Peel with " + appt_res.esthetician
-            : appt_res.treatments[0].name +
-              " Facial with " +
-              appt_res.esthetician,
           eventCalendarLink: args.client[0].email
             .toLowerCase()
             .includes("yahoo.com")
@@ -576,9 +534,7 @@ const addAppointmentMutation = {
         endTime: appt_res.endTime,
         duration: appt_res.duration,
         price: appt_res.price,
-        treatments: appt_res.treatments,
-        addOns: appt_res.addOns,
-        bookedWithCardSquareID: appt_res.bookedWithCardSquareID,
+        store: args.store[0],
         notes: appt_res.notes,
         confirmed: appt_res.confirmed,
       };
@@ -606,13 +562,6 @@ const addAppointmentMutation = {
           date: appt_res.date,
           day: moment(appt_res.date, "LL").format("dddd"),
           startTime: appt_res.startTime + " " + appt_res.morningOrEvening,
-          treatment: appt_res.treatments[0].name.includes("Salt Cave")
-            ? "Salt Cave"
-            : appt_res.treatments[0].name === "ChemicalPeel"
-            ? "Chemical Peel with " + appt_res.esthetician
-            : appt_res.treatments[0].name +
-              " Facial with " +
-              appt_res.esthetician,
           eventCalendarLink: args.client[0].email
             .toLowerCase()
             .includes("yahoo.com")
@@ -700,9 +649,7 @@ const addAppointmentMutation = {
       endTime: appt_res.endTime,
       duration: appt_res.duration,
       price: appt_res.price,
-      treatments: appt_res.treatments,
-      addOns: appt_res.addOns,
-      bookedWithCardSquareID: appt_res.bookedWithCardSquareID,
+      store: args.store[0],
       notes: appt_res.notes,
       confirmed: appt_res.confirmed,
     };

@@ -4,8 +4,8 @@ const addStoreMutation = gql`
   mutation(
     $name: String!
     $address: String!
-    $coordinateLat: Int!
-    $coordinateLng: Int!
+    $coordinateLat: String!
+    $coordinateLng: String!
     $city: String!
     $country: String!
     $phone: String!

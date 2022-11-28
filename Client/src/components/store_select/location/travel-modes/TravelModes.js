@@ -21,33 +21,33 @@ const TravelModes = (props) => {
         aria-label="text primary button group"
       >
         <TravelModeButton
-          // key={google.maps.TravelMode.BICYCLING.toString()}
+          key={google.maps.TravelMode.BICYCLING.toString()}
           icon={DirectionsBikeIcon}
-          // mode={google.maps.TravelMode.BICYCLING}
+          mode={google.maps.TravelMode.BICYCLING}
           travelMode={props.travelMode}
           setTravelMode={props.setTravelMode}
         />
 
         <TravelModeButton
-          // key={google.maps.TravelMode.DRIVING.toString()}
+          key={google.maps.TravelMode.DRIVING.toString()}
           icon={DriveEtaIcon}
-          // mode={google.maps.TravelMode.DRIVING}
+          mode={google.maps.TravelMode.DRIVING}
           travelMode={props.travelMode}
           setTravelMode={props.setTravelMode}
         />
 
         <TravelModeButton
-          // key={google.maps.TravelMode.TRANSIT.toString()}
+          key={google.maps.TravelMode.TRANSIT.toString()}
           icon={CommuteIcon}
-          // mode={google.maps.TravelMode.TRANSIT}
+          mode={google.maps.TravelMode.TRANSIT}
           travelMode={props.travelMode}
           setTravelMode={props.setTravelMode}
         />
 
         <TravelModeButton
-          // key={google.maps.TravelMode.WALKING.toString()}
+          key={google.maps.TravelMode.WALKING.toString()}
           icon={DirectionsWalkIcon}
-          // mode={google.maps.TravelMode.WALKING}
+          mode={google.maps.TravelMode.WALKING}
           travelMode={props.travelMode}
           setTravelMode={props.setTravelMode}
         />

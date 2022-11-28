@@ -1,7 +1,6 @@
 const graphql = require("graphql");
-const AddOnType = require("./AddOnType");
 const ClientType = require("./ClientType");
-const TreatmentType = require("./TreatmentType");
+const StoreType = require("./StoreType");
 
 const {
   GraphQLObjectType,
@@ -26,10 +25,8 @@ const AppointmentType = new GraphQLObjectType({
     price: { type: GraphQLInt },
     esthetician: { type: GraphQLString },
     createdAt: { type: GraphQLString },
-    bookedWithCardSquareID: { type: GraphQLString },
     client: { type: ClientType },
-    treatments: { type: new GraphQLList(TreatmentType) },
-    addOns: { type: new GraphQLList(AddOnType) },
+    store: { type: StoreType },
     notes: { type: GraphQLString },
     confirmed: { type: GraphQLBoolean },
   }),

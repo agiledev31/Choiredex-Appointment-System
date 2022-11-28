@@ -7,7 +7,7 @@ const Notification = require("../../models/notification");
 const jwt = require("jsonwebtoken");
 const createNotificationFunction = require("./notifications/createNotificationFunction");
 
-const { GraphQLString, GraphQLInt, GraphQLList } = graphql;
+const { GraphQLString, GraphQLInt, GraphQLFloat, GraphQLList } = graphql;
 
 const UPDATED_EMPLOYEE = "getUpdatedEmployee";
 
@@ -16,8 +16,8 @@ const addStoreMutation = {
   args: {
     name: { type: GraphQLString },
     address: { type: GraphQLString },
-    coordinateLat: { type: GraphQLInt },
-    coordinateLng: { type: GraphQLInt },
+    coordinateLat: { type: GraphQLString },
+    coordinateLng: { type: GraphQLString },
     city: { type: GraphQLString },
     country: { type: GraphQLString },
     phone: { type: GraphQLString },

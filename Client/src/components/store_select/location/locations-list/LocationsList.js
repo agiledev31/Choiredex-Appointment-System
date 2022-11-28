@@ -14,7 +14,10 @@ const LocationsList = (props) => {
   const {
     locations,
     selectedLocation,
-    setSelectedLocation
+    setSelectedLocation,
+    calculateDistance,
+    calculateTravelTime,
+    position,
   } = props;
 
   return (
@@ -26,10 +29,13 @@ const LocationsList = (props) => {
       >
         {locations.map((item) => (
           <LocationsListItem
-            key={item.location_code}
+            key={item._id}
             location={item}
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
+            calculateDistance={calculateDistance}
+            calculateTravelTime={calculateTravelTime}
+            position={position}
           />
         ))}
       </List>

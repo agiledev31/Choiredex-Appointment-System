@@ -258,8 +258,8 @@ const AdminEditStoreItem = (props) => {
     _id: props.item._id,
     name: name,
     address: address,
-    coordinateLat: Number(coordinateLat),
-    coordinateLng: Number(coordinateLng),
+    coordinateLat: coordinateLat.toString(),
+    coordinateLng: coordinateLng.toString(),
     city: city,
     country: country,
     phone: phone,
@@ -769,7 +769,7 @@ const AdminEditStoreItem = (props) => {
                         : "react-autosuggest__input"
                     }
                     placeholder="Store service"
-                    placeholderClassName="admin_add_staff_dropdown_placeholder_no_time"
+                    placeholderClassName="admin_add_store_dropdown_placeholder_no_time"
                   />
                 </div>
               ) : null}

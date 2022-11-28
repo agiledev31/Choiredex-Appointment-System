@@ -469,11 +469,17 @@ const Availability = (props) => {
     if (!selectedEsthetician) {
       if (props.getEmployeesData) {
         if (props.getEmployeesData.employees) {
-          const filteredEmployeesArr = props.getEmployeesData.employees.filter(
-            (x) => {
-              return x.employeeRole.includes("Esthetician");
-            }
-          );
+          let filteredEmployeesArr = []
+          if(props.selectedStore){
+            // select store manager
+          }
+          if(!filteredEmployeesArr.length){
+            filteredEmployeesArr = props.getEmployeesData.employees.filter(
+              (x) => {
+                return x.employeeRole.includes("Admin");
+              }
+            );
+          }
 
           const randomEmployee =
             filteredEmployeesArr[
@@ -506,7 +512,7 @@ const Availability = (props) => {
     <div className="availability_container" id="date_page">
       {redirectToHome()}
       <div className="availability_container_header">
-        {!props.currentScreenSize ? (
+        {/* {!props.currentScreenSize ? (
           props.initialScreenSize >= 1200 ? (
             <div onClick={() => dispatch(ACTION_CART_PAGE_OPENED())}>
               <FontAwesomeIcon
@@ -539,7 +545,7 @@ const Availability = (props) => {
               icon={faChevronLeft}
             />
           </Link>
-        )}
+        )} */}
         <h1>AVAILABILITY</h1>
         {!props.currentScreenSize ? (
           props.initialScreenSize >= 1200 ? (

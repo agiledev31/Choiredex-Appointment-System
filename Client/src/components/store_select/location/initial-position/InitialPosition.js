@@ -41,7 +41,6 @@ const InitialPosition = (props) => {
   const showPosition = (position) => {
     let lat = position.coords.latitude // You have obtained latitude coordinate!
     let long = position.coords.longitude // You have obtained longitude coordinate!
-    console.log("position:",  lat, long)
     getAddress(lat, long, process.env.REACT_APP_GOOGLE_MAPS_API_KEY) // Will convert lat/long to City, State, & Zip code
   }
   // Converting lat/long from browser geolocation into city, state, and zip code using Google Geocoding API
@@ -52,6 +51,7 @@ const InitialPosition = (props) => {
   }
   // Dispatching city, state, and zip code to store state
   const setZip = (address) => {
+    console.log("my position", address)
     props.setPosition({
         name: address.results[0].address_components[2].short_name,
         address: address.results[2].formatted_address,
@@ -68,21 +68,20 @@ const InitialPosition = (props) => {
   }
 
   const onLoad = (e) => {
-    console.log('autocompletebody:', e)
     setAutocompletebody(e)
   }
 
   const onPlaceChanged = () => {
     if (autocompletebody !== null) {
-      console.log("autocompletebody", autocompletebody.getPlace());
-      manualPosition(autocompletebody.getPlace())
+      manualPosition(autocompletebody.getPlace());
+    console.log("select position", autocompletebody.getPlace())
+
     } else {
       console.log('Autocomplete is not loaded yet!')
     }
   }
   
   const searchKeyInput = (e) => {
-    console.log("searchKey", e.persist());
     // setSearchKey(e.target.value);
   }
 
@@ -109,7 +108,6 @@ const InitialPosition = (props) => {
       group_id: 1,
       countryID: address.results[0].address_components[2].short_name,
     };
-    console.log(location)
     props.setPosition(location);
   }
 
@@ -122,7 +120,7 @@ const InitialPosition = (props) => {
   useEffect(() => {
     setTimeout(() => {
       getPosition();
-      console.log("get position")
+      console.log("get my position")
     }, 1500)
   }, [])
 

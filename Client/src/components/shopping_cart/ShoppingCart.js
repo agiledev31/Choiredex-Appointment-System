@@ -111,7 +111,6 @@ const ShoppingCart = (props) => {
   };
 
   const backToHome = () => {
-    console.log("back to home")
     dispatch(ACTION_CART_IS_NOT_ACTIVE());
     dispatch(ACTION_CART_PAGE_RESET());
   };
@@ -465,8 +464,8 @@ const ShoppingCart = (props) => {
           <div className="cart_card_top_container">
             <h3 className="shopping_cart_duration">
               Store Manager: 
-              <span>{selectedStore.manager.first_name} </span>
-              <span>{selectedStore.manager.last_name}</span>
+              {/* <span>{selectedStore.manager.first_name} </span> */}
+              {/* <span>{selectedStore.manager.last_name}</span> */}
             </h3>
           </div>
           <div className="cart_card_bottom_container">

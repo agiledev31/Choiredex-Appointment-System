@@ -11,26 +11,27 @@ const getAllAppointmentsQuery = gql`
       duration
       price
       esthetician
-      treatments {
-        name
-        duration
-        price
-      }
-      addOns {
-        name
-        duration
-        price
-      }
       client {
         _id
-        squareCustomerId
-        unsavedSquareCardIDs
         firstName
         lastName
         email
         phoneNumber
       }
-      bookedWithCardSquareID
+      store {
+        _id
+        name
+        address
+        coordinateLat
+        coordinateLng
+        city
+        country
+        phone
+        email
+        website
+        timezone
+        availableServices
+      }
       notes
       confirmed
     }

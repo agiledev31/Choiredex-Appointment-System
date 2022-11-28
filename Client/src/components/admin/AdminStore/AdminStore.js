@@ -19,7 +19,6 @@ import AdminEditStore from "./AdminEditStore";
 import AdminStoreIndividual from "./AdminStoreIndividual";
 import ACTION_SPLASH_SCREEN_COMPLETE from "../../../actions/SplashScreenComplete/ACTION_SPLASH_SCREEN_COMPLETE";
 import ACTION_SPLASH_SCREEN_HALFWAY from "../../../actions/SplashScreenHalfway/ACTION_SPLASH_SCREEN_HALFWAY";
-import ACTION_LOGIN_IS_NOT_ACTIVE from "../../../actions/Login/ACTION_LOGIN_IS_NOT_ACTIVE";
 import ACTION_LOADING_SPINNER_RESET from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_RESET";
 import ACTION_LOADING_SPINNER_ACTIVE from "../../../actions/LoadingSpinner/ACTION_LOADING_SPINNER_ACTIVE";
 import ACTION_ON_ACTIVITY_PAGE_RESET from "../../../actions/Admin/OnActivityPage/ACTION_ON_ACTIVITY_PAGE_RESET";
@@ -55,12 +54,6 @@ const AdminStore = (props) => {
   );
   const adminAuthenticated = useSelector(
     (state) => state.adminAuthenticated.admin_authenticated
-  );
-  const logoutClicked = useSelector(
-    (state) => state.logoutClicked.log_out_clicked
-  );
-  const loginIsActive = useSelector(
-    (state) => state.loginIsActive.login_is_active
   );
 
   const loadingSpinnerActive = useSelector(
@@ -140,7 +133,7 @@ const AdminStore = (props) => {
           changeFilteredAllStores(
             [...getAllStoresData.all_stores].filter((x) => {
               return (
-                new RegExp(storeFilter, "gi").test(x.mame)
+                new RegExp(storeFilter, "gi").test(x.name)
               );
             })
           );
@@ -211,13 +204,6 @@ const AdminStore = (props) => {
     }
   }, [location.pathname, loadingSpinnerActive]);
 
-  // When account screen unmounts, allow navbar
-  useEffect(() => {
-    if (loginIsActive) {
-      dispatch(ACTION_LOGIN_IS_NOT_ACTIVE());
-    }
-  }, [dispatch, loginIsActive]);
-
   useEffect(() => {
     if (getAllStoresLoading) {
       dispatch(ACTION_LOADING_SPINNER_ACTIVE());
@@ -277,7 +263,6 @@ const AdminStore = (props) => {
         className="admin_clients_header"
         style={{
           zIndex:
-            logoutClicked ||
             loadingSpinnerActive ||
             imageLoading ||
             getAllStoresLoading
@@ -376,7 +361,6 @@ const AdminStore = (props) => {
                                   ...styleprops,
                                   ...{
                                     zIndex:
-                                      logoutClicked ||
                                       loadingSpinnerActive ||
                                       imageLoading
                                         ? 0
@@ -449,8 +433,7 @@ const AdminStore = (props) => {
                 className="add_staff_member_button_container"
                 style={{
                   zIndex: serviceToggled
-                    ? logoutClicked ||
-                      loadingSpinnerActive ||
+                    ? loadingSpinnerActive ||
                       imageLoading ||
                       addServiceClicked ||
                       serviceToggled
@@ -458,8 +441,7 @@ const AdminStore = (props) => {
                       : 0
                     : addServiceClicked
                     ? -1
-                    : logoutClicked ||
-                      loadingSpinnerActive ||
+                    : loadingSpinnerActive ||
                       imageLoading ||
                       addServiceClicked
                     ? 0

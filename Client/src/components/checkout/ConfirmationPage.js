@@ -196,9 +196,23 @@ const ConfirmationPage = (props) => {
         ? "AM"
         : "PM",
     endTime: appointmentEndTime,
-    duration: totalDuration,
+    duration: 30, // totalDuration,
     price: totalPrice,
     esthetician: selectedEsthetician,
+    store: {
+      _id: props.selectedStore._id,
+      name: props.selectedStore.name,
+      address: props.selectedStore.address,
+      coordinateLat: props.selectedStore.coordinateLat,
+      coordinateLng: props.selectedStore.coordinateLng,
+      city: props.selectedStore.city,
+      country: props.selectedStore.country,
+      phone: props.selectedStore.phone,
+      email: props.selectedStore.email,
+      website: props.selectedStore.website,
+      timezone: props.selectedStore.timezone,
+      availableServices: props.selectedStore.availableServices,
+    },
     firstName: userAuthenticated
       ? data
         ? data.client.firstName
@@ -215,37 +229,32 @@ const ConfirmationPage = (props) => {
         ? data.client.phoneNumber
         : phoneNumber
       : phoneNumber,
-    bookedWithCardSquareID: bookedWithCardID,
     notes: appointmentNotes,
-    squareCustomerId: userAuthenticated ? null : squareCustomerID,
-    unsavedSquareCardIDs: userAuthenticated ? null : bookedWithCardID,
   };
 
   const handleSubmitBooking = (e) => {
     e.preventDefault();
     console.log("handle submit booking")
-    console.log("treatmentsArray", treatmentsArr)
-    console.log("addOns", addOnsArr)
     console.log("variablesModel", variablesModel)
 
     if (!finalBookButtonActive) {
       dispatch(ACTION_FINAL_BOOK_BUTTON_ACTIVE());
     }
 
-    const treatmentsArray = () => {
-      return {
-        treatments: [treatmentsArr[0]],
-      };
-    };
+    // const treatmentsArray = () => {
+    //   return {
+    //     treatments: [treatmentsArr[0]],
+    //   };
+    // };
 
-    const addOnsArray = () => {
-      return {
-        addOns: addOnsArr,
-      };
-    };
+    // const addOnsArray = () => {
+    //   return {
+    //     addOns: addOnsArr,
+    //   };
+    // };
 
     addAppointment({
-      variables: { ...variablesModel, ...treatmentsArray(), ...addOnsArray() },
+      variables: { ...variablesModel, /* ...treatmentsArray(), ...addOnsArray() */ },
     });
 
     dispatch(ACTION_FINAL_BOOKING_MODAL_ACTIVE());
@@ -722,7 +731,7 @@ const ConfirmationPage = (props) => {
       <div className="summary_facial_container">
         <h2 className="summary_facial_container_title">
           My Partner:
-          {" " + props.selectedStore.manager.first_name + " " + props.selectedStore.manager.last_name }
+          {" " + selectedEsthetician.first_name + " " + selectedEsthetician.last_name }
         </h2>
         {/* {renderSummaryCardTreatments()} */}
       </div>
@@ -840,7 +849,7 @@ const ConfirmationPage = (props) => {
                     : "PM"}
                 </p>
                 <p className="modal_appointment_spacer">|</p>
-                <p className="modal_appointment_provider">Glow Labs</p>
+                <p className="modal_appointment_provider">CHOIREDEX</p>
               </div>
               <div className="modal_bottom_info_container">
                 <p className="modal_full_date_info">

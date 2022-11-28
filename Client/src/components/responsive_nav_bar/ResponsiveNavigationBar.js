@@ -1258,7 +1258,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
             </p>
           </Link>
         </div>
-        <Link
+        {/* <Link
           to={
             cartIsActive
               ? location.pathname
@@ -1321,7 +1321,7 @@ const ResponsiveNavigationBar = React.forwardRef((props, ref) => {
             </div>
             <GrCart className="navbar_cart_icon" />
           </div>
-        </Link>
+        </Link> */}
       </div>
     </nav>
   );

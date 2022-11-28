@@ -12,7 +12,6 @@ const getAppointmentQuery = gql`
     $lastName: String
     $email: String
     $phoneNumber: String
-    $bookedWithCardSquareID: String
   ) {
     appointment(
       date: $date
@@ -21,7 +20,6 @@ const getAppointmentQuery = gql`
       endTime: $endTime
       duration: $duration
       price: $price
-      bookedWithCardSquareID: $bookedWithCardSquareID
       client: {
         firstName: $firstName
         lastName: $lastName
@@ -35,23 +33,26 @@ const getAppointmentQuery = gql`
       endTime
       duration
       price
-      treatments {
-        name
-        duration
-        price
-      }
-      addOns {
-        name
-        duration
-        price
-      }
       client {
         firstName
         lastName
         email
         phoneNumber
       }
-      bookedWithCardSquareID
+      store {
+        _id
+        name
+        address
+        coordinateLat
+        coordinateLng
+        city
+        country
+        phone
+        email
+        website
+        timezone
+        availableServices
+      }
       notes
       confirmed
     }

@@ -12,19 +12,18 @@ const LocationsListItem = (props) => {
     selectedLocation,
     setSelectedLocation,
     location,
+    calculateDistance,
+    calculateTravelTime,
+    position,
   } = props;
   const { t } = useTranslation();
 
-  const [selected, setSelected] = useState(false)
   const selectStore = () => {
-    if(!selected) {
+    if(selectedLocation !== location) {
       setSelectedLocation(location);
-      setSelected(true);
     }else{
       setSelectedLocation(undefined);
-      setSelected(false);
     }
-    console.log("selected location:", location)
   }
 
   return (
@@ -33,13 +32,13 @@ const LocationsListItem = (props) => {
         sx={{
           p: 2,
           backgroundColor: (theme) => {
-            if (selectedLocation?.location_code === location.location_code) {
+            if (selectedLocation?._id === location._id) {
               return darken(theme.palette.background.default, 0.08);
             }
             return theme.palette.background.paper;
           },
         }}
-        key={`location-${location.location_code}`}
+        key={`location-${location._id}`}
         onClick={() => selectStore()}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -66,13 +65,10 @@ const LocationsListItem = (props) => {
           <>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="body2" color="textPrimary">
-                {/* {humanizeDistance(location.direction.distance, t)} */}
-                57km
+                {calculateDistance(position, location)} km
               </Typography>
-
               <Typography variant="body2" color="textPrimary">
-                {/* {humanizeDuration(location.direction.durationInSeconds, t)} */}
-                45min
+                {calculateTravelTime(position, location)}
               </Typography>
             </Box>
           </>
@@ -82,7 +78,6 @@ const LocationsListItem = (props) => {
           </Alert>
         )} */}
       </Box>
-
       <Divider />
     </>
   );

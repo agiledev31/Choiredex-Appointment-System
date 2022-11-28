@@ -28,9 +28,6 @@ const AdminAddServiceItem = (props) => {
     getAllStoresRefetch
   } = props;
 
-  const logoutClicked = useSelector(
-    (state) => state.logoutClicked.log_out_clicked
-  );
   const loadingSpinnerActive = useSelector(
     (state) => state.loadingSpinnerActive.loading_spinner
   );
@@ -267,8 +264,8 @@ const AdminAddServiceItem = (props) => {
   const variablesModel = {
     name: name,
     address: address,
-    coordinateLat: Number(coordinateLat),
-    coordinateLng: Number(coordinateLng),
+    coordinateLat: coordinateLat.toString(),
+    coordinateLng: coordinateLng.toString(),
     city: city,
     country: country,
     phone: phone,
@@ -362,7 +359,7 @@ const AdminAddServiceItem = (props) => {
             className="admin_individual_selected_client_container"
             style={{
               ...styleprops,
-              zIndex: logoutClicked || loadingSpinnerActive ? 0 : 5,
+              zIndex: loadingSpinnerActive ? 0 : 5,
             }}
           >
             <Modal
@@ -777,7 +774,7 @@ const AdminAddServiceItem = (props) => {
                         : "react-autosuggest__input"
                     }
                     placeholder="Store service"
-                    placeholderClassName="admin_add_staff_dropdown_placeholder_no_time"
+                    placeholderClassName="admin_add_store_dropdown_placeholder_no_time"
                   />
                 </div>
               ) : null}
@@ -785,7 +782,7 @@ const AdminAddServiceItem = (props) => {
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
                   <div className="sq-creditcard" onClick={handleSubmit}>
-                    Add Service
+                    Add Store
                   </div>
                 </div>
               </div>

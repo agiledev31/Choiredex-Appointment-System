@@ -1,30 +1,25 @@
 import { gql } from "apollo-boost";
 
 gql`
-  type TreatmentType {
-    name: String!
-    duration: Int!
-    price: Int!
+  type StoreType {
+    _id: String!
+    name:  String!
+    address:  String!
+    coordinateLat: Int!
+    coordinateLng: Int!
+    city:  String!
+    country:  String!
+    phone:  String!
+    email:  String!
+    website:  String!
+    timezone:  String!
+    availableServices: Array
   }
 `;
 
 gql`
-  type AddOnType {
-    name: String!
-    duration: Int!
-    price: Int!
-  }
-`;
-
-gql`
-  input TreatmentInput {
-    treatments: [TreatmentType]
-  }
-`;
-
-gql`
-  input AddOnInput {
-    addOns: [AddOnType]
+  input StoreInput {
+    store: [StoreType]
   }
 `;
 
@@ -41,11 +36,7 @@ const addAppointmentMutation = gql`
     $email: String!
     $phoneNumber: String!
     $esthetician: String!
-    $squareCustomerId: String
-    $unsavedSquareCardIDs: String
-    $bookedWithCardSquareID: String
-    $treatments: [TreatmentInput]
-    $addOns: [AddOnInput]
+    $store: [StoreInput]
     $notes: String
   ) {
     addAppointment(
@@ -61,12 +52,8 @@ const addAppointmentMutation = gql`
         lastName: $lastName
         email: $email
         phoneNumber: $phoneNumber
-        squareCustomerId: $squareCustomerId
-        unsavedSquareCardIDs: $unsavedSquareCardIDs
       }
-      treatments: $treatments
-      addOns: $addOns
-      bookedWithCardSquareID: $bookedWithCardSquareID
+      store: $store
       notes: $notes
     ) {
       date
@@ -82,20 +69,20 @@ const addAppointmentMutation = gql`
         lastName
         email
         phoneNumber
-        squareCustomerId
-        unsavedSquareCardIDs
       }
-      treatments {
+      store {
         name
-        price
-        duration
+        address
+        coordinateLat
+        coordinateLng
+        city
+        country
+        phone
+        email
+        website
+        timezone
+        availableServices
       }
-      addOns {
-        name
-        price
-        duration
-      }
-      bookedWithCardSquareID
       notes
       confirmed
     }
