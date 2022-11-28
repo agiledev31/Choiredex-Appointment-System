@@ -17,10 +17,9 @@ const LocationsListItem = (props) => {
     travelMode,
   } = props;
 
-  const [travelTime, changeTravelTime] = useState("Can't calculate ravel time");
+  const [travelTime, changeTravelTime] = useState("");
 
   const calculateTravelTime = (position, store) => {
-    console.log("origin :", position.coordinates.lat, "::", position.coordinates.lng, "::", ":"+parseFloat(store.coordinateLat)+":", "::", parseFloat(store.coordinateLng))
     var origin = new google.maps.LatLng( position.coordinates.lat, position.coordinates.lng ); // using google.maps.LatLng class
     var destination = new google.maps.LatLng(parseFloat(store.coordinateLat), parseFloat(store.coordinateLng)); // using string
     
@@ -46,7 +45,7 @@ const LocationsListItem = (props) => {
         console.log("result", point.duration.text)
         changeTravelTime(point.duration.text);
       } else {
-        changeTravelTime("Can't calculate ravel time");
+        changeTravelTime("");
       }
     });
   }
