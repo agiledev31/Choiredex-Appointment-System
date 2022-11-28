@@ -12,6 +12,20 @@ const getEmployeesQuery = gql`
       permanentPasswordSet
       employeeRole
       profilePicture
+      store {
+        _id
+        name
+        address
+        coordinateLat
+        coordinateLng
+        city
+        country
+        phone
+        email
+        website
+        timezone
+        availableServices
+      }
     }
   }
 `;

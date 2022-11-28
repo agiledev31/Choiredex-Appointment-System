@@ -39,6 +39,7 @@ import ACTION_IMAGE_LOADING_RESET from "../../../actions/Admin/ImageLoading/ACTI
 import ACTION_ON_ACTIVITY_PAGE_RESET from "../../../actions/Admin/OnActivityPage/ACTION_ON_ACTIVITY_PAGE_RESET";
 import "./AdminStaff.css";
 import "react-html5-camera-photo/build/css/index.css";
+import AdminEditStaffMember from "./AdminEditStaffMember";
 
 const AdminStaff = (props) => {
   const {
@@ -138,6 +139,10 @@ const AdminStaff = (props) => {
   const [imagePreviewAvailable, changeImagePreviewAvailable] = useState(false);
   const [pdfLoading, changePDFLoading] = useState(false);
 
+  const [adminSelected, changeAdminSelected] = useState("");
+  const [editItem, changeEditItem] = useState("");
+
+  console.log("adminSelected", adminSelected)
   const [
     updateAdminProfilePicture,
     { data: updateAdminProfilePictureData },
@@ -863,116 +868,132 @@ const AdminStaff = (props) => {
                           }
                         />
                       ) : null}
-                      <Transition
-                        items={employeeToggled}
-                        from={{ transform: "translateX(-100%)" }}
-                        enter={{ transform: "translateX(0%)" }}
-                        leave={{ transform: "translateX(-100%)" }}
-                        config={{ duration: 200 }}
-                      >
-                        {(employeeToggled) =>
-                          employeeToggled === item._id &&
-                          ((styleprops) => (
-                            <div
-                              className="admin_individual_selected_client_container"
-                              style={{
-                                ...styleprops,
-                                ...{
-                                  zIndex:
-                                    logoutClicked ||
-                                    addProfilePhotoClicked ||
-                                    loadingSpinnerActive ||
-                                    imageLoading ||
-                                    cancelAppointmentClicked
-                                      ? 0
-                                      : 1,
-                                },
-                              }}
-                            >
-                              <div className="admin_individual_selected_client_contents_container">
-                                <div
-                                  className="admin_individual_selected_client_back_container"
-                                  ref={selectedEmployeeBackRef}
-                                  onClick={(e) => {
-                                    adminClientSectionSelected === ""
-                                      ? handleEmployeeUntoggled(e)
-                                      : dispatch(
-                                          ACTION_ADMIN_CLIENT_PROFILE_SELECTED()
-                                        );
-                                  }}
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faLongArrowAltLeft}
-                                    className="admin_individual_selected_client_back_arrow_icon"
-                                  />
-                                  <p>
-                                    {adminClientSectionSelected === ""
-                                      ? "Back to all staff"
-                                      : "Back to " +
-                                        item.firstName[0].toUpperCase() +
-                                        item.firstName.slice(1).toLowerCase() +
-                                        " " +
-                                        item.lastName[0].toUpperCase() +
-                                        item.lastName.slice(1).toLowerCase() +
-                                        "'s Profile"}
-                                  </p>
+                      {adminSelected === "" ? (
+                        <Transition
+                          items={employeeToggled}
+                          from={{ transform: "translateX(-100%)" }}
+                          enter={{ transform: "translateX(0%)" }}
+                          leave={{ transform: "translateX(-100%)" }}
+                          config={{ duration: 200 }}
+                        >
+                          {(employeeToggled) =>
+                            employeeToggled === item._id &&
+                            ((styleprops) => (
+                              <div
+                                className="admin_individual_selected_client_container"
+                                style={{
+                                  ...styleprops,
+                                  ...{
+                                    zIndex:
+                                      logoutClicked ||
+                                      addProfilePhotoClicked ||
+                                      loadingSpinnerActive ||
+                                      imageLoading ||
+                                      cancelAppointmentClicked
+                                        ? 0
+                                        : 1,
+                                  },
+                                }}
+                              >
+                                <div className="admin_individual_selected_client_contents_container">
+                                  <div
+                                    className="admin_individual_selected_client_back_container"
+                                    ref={selectedEmployeeBackRef}
+                                    onClick={(e) => {
+                                      adminClientSectionSelected === ""
+                                        ? handleEmployeeUntoggled(e)
+                                        : dispatch(
+                                            ACTION_ADMIN_CLIENT_PROFILE_SELECTED()
+                                          );
+                                    }}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faLongArrowAltLeft}
+                                      className="admin_individual_selected_client_back_arrow_icon"
+                                    />
+                                    <p>
+                                      {adminClientSectionSelected === ""
+                                        ? "Back to all staff"
+                                        : "Back to " +
+                                          item.firstName[0].toUpperCase() +
+                                          item.firstName.slice(1).toLowerCase() +
+                                          " " +
+                                          item.lastName[0].toUpperCase() +
+                                          item.lastName.slice(1).toLowerCase() +
+                                          "'s Profile"}
+                                    </p>
+                                  </div>
+                                  {adminClientSectionSelected === "" ? (
+                                    <AdminStaffIndividualProfile
+                                      item={item}
+                                      changeEditItem={changeEditItem}
+                                      employeeToggled={employeeToggled}
+                                      changeEmployeeToggled={
+                                        changeEmployeeToggled
+                                      }
+                                      handleProfilePictureRender={
+                                        handleProfilePictureRender
+                                      }
+                                      renderBarInContactInfo={
+                                        renderBarInContactInfo
+                                      }
+                                      getEmployeesData={getEmployeesData}
+                                      getEmployeesRefetch={getEmployeesRefetch}
+                                      getEmployeeData={getEmployeeData}
+                                      adminSelected={adminSelected}
+                                      changeAdminSelected={ changeAdminSelected }
+                                    />
+                                  ) : null}
+                                  {adminClientSectionSelected ===
+                                  "UpcomingAppointments" ? (
+                                    <div className="admin_side_my_appointments_content_container">
+                                      <AdminRenderUpcomingAppointments
+                                        data={selectedEmployeeAppointments}
+                                        getAllAppointmentsRefetch={
+                                          getAllAppointmentsRefetch
+                                        }
+                                        item={item}
+                                        override={override}
+                                        loadingSpinnerActive={
+                                          loadingSpinnerActive
+                                        }
+                                        currentScreenSize={currentScreenSize}
+                                        initialScreenSize={initialScreenSize}
+                                      />
+                                    </div>
+                                  ) : adminClientSectionSelected ===
+                                    "PastAppointments" ? (
+                                    <div className="admin_side_my_appointments_content_container">
+                                      <AdminRenderPastAppointments
+                                        data={selectedEmployeePastAppointments}
+                                        item={item}
+                                        currentScreenSize={currentScreenSize}
+                                        initialScreenSize={initialScreenSize}
+                                      />
+                                    </div>
+                                  ) : null}
                                 </div>
-                                {adminClientSectionSelected === "" ? (
-                                  <AdminStaffIndividualProfile
-                                    item={item}
-                                    employeeToggled={employeeToggled}
-                                    changeEmployeeToggled={
-                                      changeEmployeeToggled
-                                    }
-                                    handleProfilePictureRender={
-                                      handleProfilePictureRender
-                                    }
-                                    renderBarInContactInfo={
-                                      renderBarInContactInfo
-                                    }
-                                    getEmployeesData={getEmployeesData}
-                                    getEmployeesRefetch={getEmployeesRefetch}
-                                    getEmployeeData={getEmployeeData}
-                                  />
-                                ) : null}
-                                {adminClientSectionSelected ===
-                                "UpcomingAppointments" ? (
-                                  <div className="admin_side_my_appointments_content_container">
-                                    <AdminRenderUpcomingAppointments
-                                      data={selectedEmployeeAppointments}
-                                      getAllAppointmentsRefetch={
-                                        getAllAppointmentsRefetch
-                                      }
-                                      item={item}
-                                      override={override}
-                                      loadingSpinnerActive={
-                                        loadingSpinnerActive
-                                      }
-                                      currentScreenSize={currentScreenSize}
-                                      initialScreenSize={initialScreenSize}
-                                    />
-                                  </div>
-                                ) : adminClientSectionSelected ===
-                                  "PastAppointments" ? (
-                                  <div className="admin_side_my_appointments_content_container">
-                                    <AdminRenderPastAppointments
-                                      data={selectedEmployeePastAppointments}
-                                      item={item}
-                                      currentScreenSize={currentScreenSize}
-                                      initialScreenSize={initialScreenSize}
-                                    />
-                                  </div>
-                                ) : null}
                               </div>
-                            </div>
-                          ))
-                        }
-                      </Transition>
+                            ))
+                          }
+                        </Transition>
+                      ) : null }
                     </div>
                   );
                 })
             : null
           : null}
+        {adminSelected === "edit" ? (
+          <AdminEditStaffMember
+            item={editItem}
+            getAllRolesData={getAllRolesData}
+            getAllStoresData={getAllStoresData}
+            getAllStoresRefetch={getAllStoresRefetch}
+            getEmployeesRefetch={getEmployeesRefetch}
+            adminSelected={adminSelected}
+            changeAdminSelected={  changeAdminSelected  }
+          />
+        ) : null}
         {getEmployeeData ? (
           getEmployeeData.employee ? (
             getEmployeeData.employee.employeeRole.includes("Admin") ? (

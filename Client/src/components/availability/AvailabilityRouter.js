@@ -4,6 +4,10 @@ import TimePreference from "./Time/TimePreference";
 import { Switch, Route } from "react-router-dom";
 
 const AvailabilityRouter = (props) => {
+  const {
+    selectedStore
+  } = props;
+
   return (
     <Switch>
       <Route
@@ -11,6 +15,7 @@ const AvailabilityRouter = (props) => {
         path={props.path}
         render={() => (
           <Availability
+            selectedStore={selectedStore}
             initialScreenSize={props.initialScreenSize}
             currentScreenSize={props.currentScreenSize}
             getEmployeesData={props.getEmployeesData}
@@ -22,6 +27,7 @@ const AvailabilityRouter = (props) => {
         path={props.path + "/timepreference"}
         render={() => (
           <TimePreference
+            selectedStore={selectedStore}
             initialScreenSize={props.initialScreenSize}
             currentScreenSize={props.currentScreenSize}
           />

@@ -730,16 +730,22 @@ const ConfirmationPage = (props) => {
       </div>
       <div className="summary_facial_container">
         <h2 className="summary_facial_container_title">
-          My Partner:
-          {" " + selectedEsthetician.first_name + " " + selectedEsthetician.last_name }
+          {" " + props.selectedStore.name }
         </h2>
         {/* {renderSummaryCardTreatments()} */}
       </div>
       {/* {renderSummaryCardAddOnSection()} */}
-      {/* <div className="summary_card_subtotal_container">
-        <p>TOTAL</p>
-        <p>${totalPrice}</p>
-      </div> */}
+      <div className="confirmation_page_statement">
+        <div>
+          <span>Address:</span>
+          <span>{props.selectedStore.address}</span>
+          <p>{props.selectedStore.city}, {props.selectedStore.country}</p>
+        </div>
+        <div>
+          <span>Tel:</span>
+          <span>{props.selectedStore.phone}</span>
+        </div>
+      </div>
       <Link
         to={
           props.currentScreenSize
@@ -836,7 +842,7 @@ const ConfirmationPage = (props) => {
                   ? data.client.firstName
                   : firstName
                 : firstName}
-              , your appointment has been confirmed.
+              , your appointment with the store {props.selectedStore.name} has been confirmed.
             </p>
             <div className="modal_date_time_container">
               <div className="modal_bold_details_container">
@@ -856,9 +862,9 @@ const ConfirmationPage = (props) => {
                   {dayOfTheWeek.toUpperCase()}, {reformattedDay.toUpperCase()}
                 </p>
                 <div className="modal_address_container">
-                  <p>1506 BROADWAY</p>
+                  <p>{props.selectedStore.address}</p>
                   <p>|</p>
-                  <p>HEWLETT, NY</p>
+                  <p>{props.selectedStore.city}</p>
                 </div>
               </div>
             </div>

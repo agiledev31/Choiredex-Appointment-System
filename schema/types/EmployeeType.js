@@ -1,5 +1,6 @@
 const graphql = require("graphql");
 const NotificationType = require("./NotificationType");
+const StoreType = require("./StoreType");
 
 const {
   GraphQLObjectType,
@@ -22,6 +23,7 @@ const EmployeeType = new GraphQLObjectType({
     phoneNumber: { type: GraphQLString },
     profilePicture: { type: GraphQLString },
     employeeRole: { type: new GraphQLList(GraphQLString) },
+    store: { type: StoreType }, 
     permanentPasswordSet: { type: GraphQLBoolean },
     password: { type: GraphQLString },
     notifications: { type: new GraphQLList(NotificationType) },

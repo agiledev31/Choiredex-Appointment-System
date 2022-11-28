@@ -107,20 +107,22 @@ const AdminRouter = React.forwardRef((props, ref) => {
     if (getClientsData) {
       if (getClientsData.clients.length > 0) {
         return randomColor({
-          count: getClientsData.clients.length + getEmployeesData.employees.length,
+          count: getClientsData.clients.length,
           hue: "#0081B1",
           format: "rgba",
           luminosity: "dark",
           alpha: 0.7,
         });
-      }else if(getEmployeesData.employees.length > 0){
-        return randomColor({
-          count: getEmployeesData.employees.length,
-          hue: "#0081B1",
-          format: "rgba",
-          luminosity: "dark",
-          alpha: 0.7,
-        });
+      }else if(getEmployeesData){
+        if(getEmployeesData.employees.length > 0){
+          return randomColor({
+            count: getClientsData.clients.length + getEmployeesData.employees.length,
+            hue: "#0081B1",
+            format: "rgba",
+            luminosity: "dark",
+            alpha: 0.7,
+          })
+        }
       }
     }
   }, [getClientsData, getEmployeesData]);

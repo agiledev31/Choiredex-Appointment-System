@@ -10,6 +10,7 @@ const updateConsentFormMutation = require("./mutations/updateConsentFormMutation
 const updateMyRoutineMutation = require("./mutations/updateMyRoutineMutation");
 const updateClientsInvalidateTokensMutation = require("./mutations/updateClientInvalidateTokensMutation");
 const updateEmployeeInvalidateTokensMutation = require("./mutations/updateEmployeeInvalidateTokensMutation");
+const updateEmployeeMutation = require("./mutations/updateEmployeeMutation");
 const deleteAppointmentMutation = require("./mutations/deleteAppointmentMutation");
 const deletePersonalEventMutation = require("./mutations/deletePersonalEventMutation");
 const deleteMyRoutineItemMutation = require("./mutations/deleteMyRoutineItemMutation");
@@ -46,6 +47,7 @@ const Mutation = new GraphQLObjectType({
     updateMyRoutine: updateMyRoutineMutation,
     updateClientInvalidateTokens: updateClientsInvalidateTokensMutation,
     updateEmployeeInvalidateTokens: updateEmployeeInvalidateTokensMutation,
+    updateEmployee: updateEmployeeMutation,
     deleteAppointment: deleteAppointmentMutation,
     deletePersonalEvent: deletePersonalEventMutation,
     deleteMyRoutineItem: deleteMyRoutineItemMutation,
@@ -65,6 +67,7 @@ const Mutation = new GraphQLObjectType({
     addStore: addStoreMutation,
     updateStore: updateStoreMutation,
     deleteStore: deleteStoreMutation,
+
   },
 });
 

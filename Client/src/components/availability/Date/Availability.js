@@ -34,6 +34,10 @@ import ACTION_DAY_OF_THE_WEEK_RESET from "../../../actions/SelectedDay/DayOfTheW
 import { animateScroll } from "react-scroll";
 
 const Availability = (props) => {
+  const {
+    selectedStore
+  } = props;
+
   let location = useLocation();
   const dispatch = useDispatch();
   const [numberOfWeeks, changeNumberOfWeeks] = useState(null);
@@ -585,22 +589,49 @@ const Availability = (props) => {
       </div>
       <div className="select_a_date_header">
         <h2>
-          SELECT A DATE
-          {saltCaveInCart
-            ? null
-            : selectedEsthetician
-            ? " WITH " +
-              selectedEsthetician.split(" ")[0].toUpperCase() +
-              " " +
-              selectedEsthetician.split(" ")[1][0].toUpperCase() +
-              "."
-            : null}
+          Select a date for our {selectedStore.name} store
         </h2>
       </div>
       <p className="availability_statement">
         You can schedule an appointment between 12 hours and 60 days ahead of
         time.
       </p>
+      <Link
+        to={(location) => {
+          if (!props.currentScreenSize) {
+            if (props.initialScreenSize >= 1200) {
+              return "/";
+            } else {
+              return `${location.pathname}/timepreference`;
+            }
+          } else {
+            if (props.currentScreenSize >= 1200) {
+              return "/";
+            } else {
+              return `${location.pathname}/timepreference`;
+            }
+          }
+        }}
+        style={{
+          display: "block",
+          pointerEvents: selectedDay !== "" ? "auto" : "none",
+        }}
+        onClick={handleSelectTimeButtonClick}
+      >
+        <div
+          className="select_time_button"
+          style={{
+            marginTop: numberOfWeeks < 6 ? "4vh" : "2vh",
+            marginBottom: numberOfWeeks < 6 ? "2vh" : "2vh",
+            background: selectedDay ? "rgb(44, 44, 52)" : "#f0f0f0",
+            color: selectedDay ? "rgb(255, 255, 255)" : "rgb(201, 201, 201)",
+            pointerEvents: selectedDay !== "" ? "auto" : "none",
+            transition: "background 0.5s ease, color 0.5s ease",
+          }}
+        >
+          <p>Select a Time</p>
+        </div>
+      </Link>
       <Calendar
         calendarType="ISO 8601"
         activeStartDate={
@@ -636,42 +667,6 @@ const Availability = (props) => {
           dispatch(ACTION_SELECTED_TIME_RESET());
         }}
       />
-      <Link
-        to={(location) => {
-          if (!props.currentScreenSize) {
-            if (props.initialScreenSize >= 1200) {
-              return "/";
-            } else {
-              return `${location.pathname}/timepreference`;
-            }
-          } else {
-            if (props.currentScreenSize >= 1200) {
-              return "/";
-            } else {
-              return `${location.pathname}/timepreference`;
-            }
-          }
-        }}
-        style={{
-          display: "block",
-          pointerEvents: selectedDay !== "" ? "auto" : "none",
-        }}
-        onClick={handleSelectTimeButtonClick}
-      >
-        <div
-          className="select_time_button"
-          style={{
-            marginTop: numberOfWeeks < 6 ? "4vh" : "2vh",
-            marginBottom: numberOfWeeks < 6 ? "0" : "2vh",
-            background: selectedDay ? "rgb(44, 44, 52)" : "#f0f0f0",
-            color: selectedDay ? "rgb(255, 255, 255)" : "rgb(201, 201, 201)",
-            pointerEvents: selectedDay !== "" ? "auto" : "none",
-            transition: "background 0.5s ease, color 0.5s ease",
-          }}
-        >
-          <p>Select a Time</p>
-        </div>
-      </Link>
     </div>
   );
 };

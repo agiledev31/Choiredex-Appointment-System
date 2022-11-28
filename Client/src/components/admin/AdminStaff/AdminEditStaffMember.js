@@ -10,7 +10,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import phone from "phone";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
-import addEmployeeMutation from "../../../graphql/mutations/addEmployeeMutation";
+import updateEmployeeMutation from "../../../graphql/mutations/updateEmployeeMutation";
 import Dropdown from "react-dropdown";
 import ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER from "../../../actions/Admin/AdminAddStaffMember/AdminStaffMemberPhoneNumber/ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER";
 import ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET from "../../../actions/Admin/AdminAddStaffMember/AdminStaffMemberPhoneNumber/ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET";
@@ -28,18 +28,19 @@ import "react-dropdown/style.css";
 import "react-day-picker/lib/style.css";
 import "./AdminStaff.css";
 
-const AdminAddStaffMember = (props) => {
-  const dispatch = useDispatch();
-
-  const otherRoleRef = useRef(null);
-
+const AdminEditStaffMember = (props) => {
   const {
+    adminSelected,
+    changeAdminSelected, 
     getAllRolesData,
     getAllStoresData,
     addStaffMemberClicked,
-    changeAddStaffMemberClicked,
     getEmployeesRefetch,
   } = props;
+
+  const dispatch = useDispatch();
+
+  const otherRoleRef = useRef(null);
 
   const adminStaffMemberFirstName = useSelector(
     (state) => state.adminStaffMemberFirstName.admin_staff_member_first_name
@@ -64,7 +65,14 @@ const AdminAddStaffMember = (props) => {
     (state) => state.loadingSpinnerActive.loading_spinner
   );
 
-  const [storeList, changeStoreList] = useState([]);
+  const [firstName, changeFirstName] = useState(props.item.firstName);
+  const [lastName, changeLastName] = useState(props.item.lastName);
+  const [email, changeEmail] = useState(props.item.email);
+  const [phoneNumber, changePhoneNumber] = useState(props.item.phoneNumber);
+  const [storeList, changeStoreList] = useState([props.item.store.name]);
+  const [roleList, changeRoleList] = useState(props.item.employeeRole);
+  console.log("props", props.item)
+
   const [otherRoles, changeOtherRoles] = useState([]);
   const [firstFocus, changeFirstFocus] = useState(false);
 
@@ -77,9 +85,9 @@ const AdminAddStaffMember = (props) => {
   const [storeError, changeStoreError] = useState(false);
 
   const [
-    addEmployee,
-    { loading: addEmployeeLoading, data: addEmployeeData },
-  ] = useMutation(addEmployeeMutation);
+    updateEmployee,
+    { loading: updateEmployeeLoading, data: updateEmployeeData },
+  ] = useMutation(updateEmployeeMutation);
 
   const override = css`
     display: block;
@@ -211,34 +219,32 @@ const AdminAddStaffMember = (props) => {
       }
     }
     e.currentTarget.value = currentTyping;
-    dispatch(ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER(currentTyping));
+    changePhoneNumber(currentTyping)
   };
 
   useEffect(() => {
-    if (addEmployeeData && !loadingSpinnerActive) {
-      changeAddStaffMemberClicked(false);
+    if (updateEmployeeData && !loadingSpinnerActive) {
       getEmployeesRefetch();
     }
   }, [
-    addEmployeeData,
+    updateEmployeeData,
     loadingSpinnerActive,
-    changeAddStaffMemberClicked,
     getEmployeesRefetch,
   ]);
 
   useEffect(() => {
-    if (addEmployeeLoading) {
+    if (updateEmployeeLoading) {
       dispatch(ACTION_LOADING_SPINNER_ACTIVE());
     }
-  }, [addEmployeeLoading, dispatch]);
+  }, [updateEmployeeLoading, dispatch]);
 
   useEffect(() => {
-    if (addEmployeeData) {
+    if (updateEmployeeData) {
       if (loadingSpinnerActive) {
         dispatch(ACTION_LOADING_SPINNER_RESET());
       }
     }
-  }, [addEmployeeData, loadingSpinnerActive, dispatch]);
+  }, [updateEmployeeData, loadingSpinnerActive, dispatch]);
 
   useEffect(() => {
     const refInterval = setInterval(() => {
@@ -258,13 +264,14 @@ const AdminAddStaffMember = (props) => {
   }, [firstFocus]);
 
   const handleBackToAllStaff = () => {
-    changeAddStaffMemberClicked(false);
     changeOtherRoles([]);
     dispatch(ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME_RESET());
     dispatch(ACTION_ADMIN_STAFF_MEMBER_LAST_NAME_RESET());
     dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL_RESET());
     dispatch(ACTION_ADMIN_STAFF_MEMBER_PHONE_NUMBER_RESET());
     dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
+    getEmployeesRefetch();
+    changeAdminSelected("");
   };
 
   const otherRolesValuesArr = otherRoles.map((role) => role.value);
@@ -272,21 +279,22 @@ const AdminAddStaffMember = (props) => {
   const otherRolesValuesFiltered = otherRolesValuesArr.filter((role) => role);
 
   const variablesModel = {
-    firstName: adminStaffMemberFirstName,
-    lastName: adminStaffMemberLastName,
-    email: adminStaffMemberEmail,
-    phoneNumber: adminStaffMemberPhoneNumber,
-    employeeRole: adminStaffMemberRoles.concat(otherRolesValuesFiltered),
+    _id: props.item._id,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phoneNumber: phoneNumber,
+    employeeRole: roleList,
     store: []
   };
 
   const handleSubmit = () => {
     if (
-      adminStaffMemberFirstName &&
-      adminStaffMemberLastName &&
-      adminStaffMemberPhoneNumber &&
-      adminStaffMemberEmail &&
-      adminStaffMemberRoles.concat(otherRolesValuesFiltered).length > 0
+      firstName &&
+      lastName &&
+      email &&
+      phoneNumber &&
+      roleList.length > 0
     ) {
       let store_temp = getAllStoresData.all_stores.filter(item => storeList.includes(item.name));
       store_temp = store_temp.map(item => {
@@ -304,28 +312,29 @@ const AdminAddStaffMember = (props) => {
           timezone: item.timezone,
           availableServices: item.availableServices,
         }
-      });
-      console.log("store", store_temp)
-      addEmployee({
+      })
+      updateEmployee({
         variables: {
           ...variablesModel,
           store: store_temp
         },
       });
+      getEmployeesRefetch();
+      changeAdminSelected("");
     } else {
-      if (!adminStaffMemberFirstName) {
+      if (!firstName) {
         changeFirstNameError(true);
       }
 
-      if (!adminStaffMemberLastName) {
+      if (!lastName) {
         changeLastNameError(true);
       }
 
-      if (!adminStaffMemberPhoneNumber) {
+      if (!phoneNumber) {
         changePhoneNumberError(true);
       } else {
-        if (phone(adminStaffMemberPhoneNumber)[0]) {
-          if (!isMobilePhone(phone(adminStaffMemberPhoneNumber)[0])) {
+        if (phone(phoneNumber)[0]) {
+          if (!isMobilePhone(phone(phoneNumber)[0])) {
             changePhoneNumberError(true);
           }
         } else {
@@ -333,15 +342,15 @@ const AdminAddStaffMember = (props) => {
         }
       }
 
-      if (!adminStaffMemberEmail) {
+      if (!email) {
         changeEmailError(true);
       } else {
-        if (!isEmail(adminStaffMemberEmail)) {
+        if (!isEmail(email)) {
           changeEmailError(true);
         }
       }
 
-      if (adminStaffMemberRoles.concat(otherRolesValuesFiltered).length < 1) {
+      if (roleList.concat(otherRolesValuesFiltered).length < 1) {
         changeRoleError(true);
       }
     }
@@ -349,14 +358,14 @@ const AdminAddStaffMember = (props) => {
 
   return (
     <Transition
-      items={addStaffMemberClicked}
+      items={props.item}
       from={{ transform: "translateX(-100%)" }}
       enter={{ transform: "translateX(0%)" }}
       leave={{ transform: "translateX(-100%)" }}
       config={{ duration: 200 }}
     >
-      {(createAppointmentClicked) =>
-        createAppointmentClicked &&
+      {(adminSelected) =>
+        adminSelected &&
         ((styleprops) => (
           <div
             className="admin_individual_selected_client_container"
@@ -404,10 +413,10 @@ const AdminAddStaffMember = (props) => {
                   className="admin_individual_selected_client_back_arrow_icon"
                   onClick={handleBackToAllStaff}
                 />
-                <p onClick={handleBackToAllStaff}>Back to all staff</p>
+                <p onClick={handleBackToAllStaff}>Back to the profile</p>
               </div>
               <div className="admin_create_appointment_section_header">
-                <h2>New Staff Member Information</h2>
+                <h2>Edit Staff Member Information</h2>
               </div>
               <div className="admin_create_appointment_input_information_container">
                 <div className="admin_create_appointment_label admin_create_appointment_double_label">
@@ -431,12 +440,10 @@ const AdminAddStaffMember = (props) => {
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    value={adminStaffMemberFirstName}
+                    value={firstName}
                     onChange={(e) => {
                       resetAllErrorStates();
-                      dispatch(
-                        ACTION_ADMIN_STAFF_MEMBER_FIRST_NAME(e.target.value)
-                      );
+                      changeFirstName(e.target.value)
                     }}
                     placeholder="Staff member first name"
                   />
@@ -462,12 +469,10 @@ const AdminAddStaffMember = (props) => {
                     aria-autocomplete="list"
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
-                    value={adminStaffMemberLastName}
+                    value={lastName}
                     onChange={(e) => {
                       resetAllErrorStates();
-                      dispatch(
-                        ACTION_ADMIN_STAFF_MEMBER_LAST_NAME(e.target.value)
-                      );
+                      changeLastName(e.target.value)
                     }}
                     placeholder="Staff member last name"
                   />
@@ -496,11 +501,11 @@ const AdminAddStaffMember = (props) => {
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
                     placeholder="Email address"
-                    value={adminStaffMemberEmail}
+                    value={email}
                     maxLength={100}
                     onChange={(e) => {
                       resetAllErrorStates();
-                      dispatch(ACTION_ADMIN_STAFF_MEMBER_EMAIL(e.target.value));
+                      changeEmail(e.target.value)
                     }}
                   />
                 </div>
@@ -526,7 +531,7 @@ const AdminAddStaffMember = (props) => {
                     onKeyDown={phoneNumberKeyTyping}
                     onChange={phoneNumberTyping}
                     maxLength={16}
-                    value={adminStaffMemberPhoneNumber}
+                    value={phoneNumber}
                     aria-controls="react-autowhatever-1"
                     className="react-autosuggest__input"
                     placeholder="Phone number"
@@ -534,8 +539,8 @@ const AdminAddStaffMember = (props) => {
                 </div>
               </div>
 
-              {adminStaffMemberRoles.length > 0
-                ? adminStaffMemberRoles.map((role, index) => (
+              {roleList.length > 0
+                ? roleList.map((role, index) => (
                     <div
                       className="admin_create_appointment_input_information_container"
                       key={index}
@@ -570,9 +575,9 @@ const AdminAddStaffMember = (props) => {
                         icon={faTimes}
                         className="admin_create_appointment_treatment_delete_button"
                         onClick={() => {
-                          let newArr = [...adminStaffMemberRoles];
+                          let newArr = [...roleList];
                           newArr.splice(index, 1);
-
+                          changeRoleList(newArr)
                           if (newArr.length < 1) {
                             dispatch(ACTION_ADMIN_STAFF_MEMBER_ROLES_RESET());
                           } else {
@@ -593,7 +598,7 @@ const AdminAddStaffMember = (props) => {
                       key={index}
                     >
                       <div className="admin_create_appointment_label">
-                        Role ({adminStaffMemberRoles.length + index + 1})
+                        Role ({roleList.length + index + 1})
                       </div>
                       <div
                         role="combobox"
@@ -639,15 +644,15 @@ const AdminAddStaffMember = (props) => {
                     </div>
                   ))
                 : null}
-              {adminStaffMemberRoles.concat(otherRolesValuesArr).length < 3 ? (
+              {roleList.length < 3 ? (
                 <div className="admin_create_appointment_input_information_container">
                   <div className="admin_create_appointment_label">Role(s)</div>
                   <Dropdown
                     options={getAllRolesData.all_roles.map(item => item.name)
-                      .filter((x) => !adminStaffMemberRoles.includes(x))}
+                      .filter((x) => !roleList.includes(x))}
                     onChange={(choice) => {
                       resetAllErrorStates();
-
+                      changeRoleList([...roleList, choice.value])
                       if (choice.value === "Other") {
                         changeOtherRoles([...otherRoles, { value: "" }]);
                         changeFirstFocus(true);
@@ -668,50 +673,52 @@ const AdminAddStaffMember = (props) => {
               ) : null}
 
               {storeList.length > 0
-                ? storeList.map((store, index) => (
-                    <div
-                      className="admin_create_appointment_input_information_container"
-                      key={index}
-                    >
-                      <div className="admin_create_appointment_label admin_create_appointment_double_label">
-                        Store ({index + 1})
-                      </div>
+                ? storeList[0]
+                  ? storeList.map((store, index) => (
                       <div
-                        role="combobox"
-                        aria-haspopup="listbox"
-                        aria-owns="react-autowhatever-1"
-                        aria-controls="react-autowhatever-1"
-                        aria-expanded="false"
-                        className="react-autosuggest__container"
-                        style={{
-                          outline: storeError ? "3px solid red" : "none",
-                          zIndex: storeError ? 99999 : "auto",
-                        }}
+                        className="admin_create_appointment_input_information_container"
+                        key={index}
                       >
-                        <input
-                          type="text"
-                          autoComplete="off"
-                          aria-autocomplete="list"
+                        <div className="admin_create_appointment_label admin_create_appointment_double_label">
+                          Store ({index + 1})
+                        </div>
+                        <div
+                          role="combobox"
+                          aria-haspopup="listbox"
+                          aria-owns="react-autowhatever-1"
                           aria-controls="react-autowhatever-1"
-                          className="react-autosuggest__input admin_create_appointent_dropdown_placeholder_time"
-                          value={store}
-                          maxLength={100}
-                          disabled
+                          aria-expanded="false"
+                          className="react-autosuggest__container"
+                          style={{
+                            outline: storeError ? "3px solid red" : "none",
+                            zIndex: storeError ? 99999 : "auto",
+                          }}
+                        >
+                          <input
+                            type="text"
+                            autoComplete="off"
+                            aria-autocomplete="list"
+                            aria-controls="react-autowhatever-1"
+                            className="react-autosuggest__input admin_create_appointent_dropdown_placeholder_time"
+                            value={store}
+                            maxLength={100}
+                            disabled
+                          />
+                        </div>
+                        <FontAwesomeIcon
+                          icon={faTimes}
+                          className="admin_create_appointment_treatment_delete_button"
+                          onClick={() => {
+                            let newArr = [...storeList];
+                            newArr.splice(index, 1);
+                            changeStoreList(newArr);
+                          }}
                         />
                       </div>
-                      <FontAwesomeIcon
-                        icon={faTimes}
-                        className="admin_create_appointment_treatment_delete_button"
-                        onClick={() => {
-                          let newArr = [...storeList];
-                          newArr.splice(index, 1);
-                          changeStoreList(newArr);
-                        }}
-                      />
-                    </div>
-                  ))
+                    ))
+                  : null
                 : null}
-              {storeList.length < 1 ? (
+              {!storeList[0] ? (
                 <div className="admin_create_appointment_input_information_container">
                   <div className="admin_create_appointment_label admin_create_appointment_double_label">
                     Store(s)
@@ -740,7 +747,7 @@ const AdminAddStaffMember = (props) => {
               <div className="admin_square_payment_form_container">
                 <div className="sq-payment-form">
                   <div className="sq-creditcard" onClick={handleSubmit}>
-                    Add Staff
+                    Edit Staff
                   </div>
                 </div>
               </div>
@@ -752,4 +759,4 @@ const AdminAddStaffMember = (props) => {
   );
 };
 
-export default AdminAddStaffMember;
+export default AdminEditStaffMember;

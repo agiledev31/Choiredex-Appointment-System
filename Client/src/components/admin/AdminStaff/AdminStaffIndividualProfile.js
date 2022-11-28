@@ -7,6 +7,7 @@ import {
   faCalendarAlt,
   faTrashAlt,
   faTimes,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import LZString from "lz-string";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,6 +76,11 @@ const AdminStaffIndividualProfile = (props) => {
       dispatch(ACTION_LOADING_SPINNER_ACTIVE());
     }
   }, [loading, data, dispatch]);
+
+  const handleEditStaffClicked = () => {
+    props.changeEditItem(props.item)
+    props.changeAdminSelected("edit");
+  }
 
   return (
     <>
@@ -258,6 +264,20 @@ const AdminStaffIndividualProfile = (props) => {
             className="profile_button_expand"
             icon={faChevronRight}
           />
+        </div>
+        <div className="admin_client_profile_bottom_buttons_container" style={{margin: 0, padding: 0}}>
+          <div
+            className="profile_button_container"
+            onClick={() => handleEditStaffClicked()}
+          >
+            <FontAwesomeIcon
+              className="profile_button_icon"
+              icon={faEdit}
+            />
+            <h2>
+              Edit Staff
+            </h2>
+          </div>
         </div>
         {props.getEmployeeData ? (
           props.getEmployeeData.employee ? (

@@ -417,7 +417,6 @@ const AdminStore = (props) => {
           />
         ) : null}
         {adminSelected === "edit" ? (
-          // <div>asdf</div>
           <AdminEditStore
             item={editItem}
             getAllServicesData={getAllServicesData}

@@ -43,6 +43,20 @@ const getEmployeeQuery = gql`
         createdByLastName
         createdAt
       }
+      store {
+        _id
+        name
+        address
+        coordinateLat
+        coordinateLng
+        city
+        country
+        phone
+        email
+        website
+        timezone
+        availableServices
+      }
     }
   }
 `;

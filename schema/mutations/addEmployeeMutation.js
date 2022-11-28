@@ -5,6 +5,7 @@ const mjmlUtils = require("mjml-utils");
 const nodemailer = require("nodemailer");
 const EmployeeType = require("../types/EmployeeType");
 const Employee = require("../../models/employee");
+const StoreInput = require("../types/inputs/StoreInput");
 const Notification = require("../../models/notification");
 const jwt = require("jsonwebtoken");
 const createNotificationFunction = require("./notifications/createNotificationFunction");
@@ -24,6 +25,7 @@ const addEmployeeMutation = {
     email: { type: new GraphQLNonNull(GraphQLString) },
     phoneNumber: { type: new GraphQLNonNull(GraphQLString) },
     employeeRole: { type: new GraphQLList(GraphQLString) },
+    store: { type: new GraphQLList(StoreInput) },
   },
   async resolve(parent, args, context) {
     const adminAccessToken = context.cookies["admin-access-token"];
@@ -50,6 +52,7 @@ const addEmployeeMutation = {
         logger: true,
       });
 
+      console.log("store", args.store)
       let employee = new Employee({
         _id: new mongoose.Types.ObjectId(),
         firstName: args.firstName,
@@ -58,6 +61,7 @@ const addEmployeeMutation = {
         password: password,
         phoneNumber: args.phoneNumber,
         employeeRole: args.employeeRole,
+        store: args.store ? args.store[0] : null,
       });
 
       mjmlUtils

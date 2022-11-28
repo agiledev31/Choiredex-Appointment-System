@@ -48,6 +48,10 @@ import "./TimePreference.css";
 import "../../../bootstrap.min.css";
 
 const TimePreference = (props) => {
+  const {
+    selectedStore
+  } = props;
+
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -779,22 +783,67 @@ const TimePreference = (props) => {
       </div>
       <div className="select_a_time_header">
         <h2>
-          SELECT A TIME
-          {saltCaveInCart
-            ? null
-            : selectedEsthetician
-            ? " WITH " +
-              selectedEsthetician.split(" ")[0].toUpperCase() +
-              " " +
-              selectedEsthetician.split(" ")[1][0].toUpperCase() +
-              "."
-            : null}
+          Select a time for our {selectedStore.name} store
         </h2>
       </div>
       <p className="time_statement">
         Choose a time for your appointment on {getFullDayOfTheWeek()},{" "}
         {reformattedDay}.
       </p>
+      <Link
+        to={() => {
+          if (!props.currentScreenSize) {
+            if (props.initialScreenSize >= 1200) {
+              return "/";
+            } else {
+              if (userAuthenticated) {
+                // return "/paymentinfo"; // disable payment
+                return "/checkout/confirmation";
+              } else {
+                return "/checkout";
+              }
+            }
+          } else {
+            if (props.currentScreenSize >= 1200) {
+              return "/";
+            } else {
+              if (userAuthenticated) {
+                // return "/paymentinfo"; // disable payment
+                return "/checkout/confirmation";
+              } else {
+                return "/checkout";
+              }
+            }
+          }
+        }}
+        style={{
+          display: "block",
+          pointerEvents: selectedTime !== "" ? "auto" : "none",
+        }}
+        onClick={handleContinueCheckoutButtonClick}
+      >
+        <div
+          className="time_preference_continue_button"
+          style={{
+            background: selectedTime ? "rgb(44, 44, 52)" : "#f0f0f0",
+            color: selectedTime
+              ? "rgb(255, 255, 255)"
+              : "rgb(201, 201, 201)",
+            transition: "background 0.5s ease, color 0.5s ease",
+          }}
+          onClick={() => {
+            if (userAuthenticated) {
+              // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
+              dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
+            } else {
+              dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
+            }
+          }}
+        >
+          {/* <p>Continue Checkout</p> */}
+          <p>Continue</p>
+        </div>
+      </Link>
       <div className="time_of_day_selectors_wrapper">
         <div className="time_of_day_card_container">
           <div className="time_of_day_card_top_wrapping">
@@ -1513,60 +1562,6 @@ const TimePreference = (props) => {
             transition: "margin-top 0.4s ease, padding-top 0.4s ease",
           }}
         >
-          <Link
-            to={() => {
-              if (!props.currentScreenSize) {
-                if (props.initialScreenSize >= 1200) {
-                  return "/";
-                } else {
-                  if (userAuthenticated) {
-                    // return "/paymentinfo"; // disable payment
-                    return "/checkout/confirmation";
-                  } else {
-                    return "/checkout";
-                  }
-                }
-              } else {
-                if (props.currentScreenSize >= 1200) {
-                  return "/";
-                } else {
-                  if (userAuthenticated) {
-                    // return "/paymentinfo"; // disable payment
-                    return "/checkout/confirmation";
-                  } else {
-                    return "/checkout";
-                  }
-                }
-              }
-            }}
-            style={{
-              display: "block",
-              pointerEvents: selectedTime !== "" ? "auto" : "none",
-            }}
-            onClick={handleContinueCheckoutButtonClick}
-          >
-            <div
-              className="time_preference_continue_button"
-              style={{
-                background: selectedTime ? "rgb(44, 44, 52)" : "#f0f0f0",
-                color: selectedTime
-                  ? "rgb(255, 255, 255)"
-                  : "rgb(201, 201, 201)",
-                transition: "background 0.5s ease, color 0.5s ease",
-              }}
-              onClick={() => {
-                if (userAuthenticated) {
-                  // dispatch(ACTION_PAYMENT_INFO_PAGE_OPENED());
-                  dispatch(ACTION_CONFIRMATION_PAGE_OPENED());
-                } else {
-                  dispatch(ACTION_GUEST_CHECKOUT_FORM_PAGE_OPENED());
-                }
-              }}
-            >
-              {/* <p>Continue Checkout</p> */}
-              <p>Continue</p>
-            </div>
-          </Link>
           <Link
             to={() => {
               if (!props.currentScreenSize) {

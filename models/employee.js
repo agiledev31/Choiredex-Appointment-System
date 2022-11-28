@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Store = require("./store");
 
 const currentDate = new Date().toISOString();
 
@@ -11,6 +12,7 @@ const EmployeeSchema = new Schema({
   phoneNumber: String,
   profilePicture: String,
   employeeRole: { type: Array, default: [] },
+  store: Store.schema.obj,
   permanentPasswordSet: { type: Boolean, default: false },
   password: String,
   notifications: { type: Array, default: [] },
