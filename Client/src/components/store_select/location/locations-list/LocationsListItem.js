@@ -24,11 +24,12 @@ const LocationsListItem = (props) => {
     var origin = new google.maps.LatLng( position.coordinates.lat, position.coordinates.lng ); // using google.maps.LatLng class
     var destination = new google.maps.LatLng(parseFloat(store.coordinateLat), parseFloat(store.coordinateLng)); // using string
     
-    // var haight = new google.maps.LatLng(37.7699298, -122.4469157);
-    // var oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
+    // working case
+    // var origin = new google.maps.LatLng(37.7699298, -122.4469157);
+    // var destination = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
 
-    // var haight = new google.maps.LatLng(63.3144252, 105.4182488);
-    // var oceanBeach = new google.maps.LatLng(61.52401, 105.318757);
+    // var origin = new google.maps.LatLng(61.52401, 105.318756);
+    // var destination = new google.maps.LatLng(61.52401, 105.318757);
 
     var directionsService = new google.maps.DirectionsService();
 
