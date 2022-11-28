@@ -44,8 +44,6 @@ const LocationsListItem = (props) => {
         console.log(status, "point", response);
         console.log("result", point.duration.text)
         changeTravelTime(point.duration.text);
-      } else {
-        changeTravelTime("");
       }
     });
   }
