@@ -39,7 +39,7 @@ const LocationsListItem = (props) => {
     };
 
     directionsService.route( request, function( response, status ) {
-      if ( status === 'OK' ) {
+      if ( status === "OK" ) {
         var point = response.routes[ 0 ].legs[ 0 ];
         console.log(status, "point", response);
         console.log("result", point.duration.text)

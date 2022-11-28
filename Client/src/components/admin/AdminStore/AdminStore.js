@@ -324,19 +324,19 @@ const AdminStore = (props) => {
                           <b>{item.name}</b>
                         </div>
                         <div>
-                          <p style={{width: 'fit-content'}}>{item.address}</p>
-                          <p style={{width: 'fit-content'}}>{item.city}, {item.country}</p>
+                          <p style={{width: "fit-content"}}>{item.address}</p>
+                          <p style={{width: "fit-content"}}>{item.city}, {item.country}</p>
                         </div>
                         <div>
-                          <p style={{width: 'fit-content'}}>{item.phone}</p>
-                          <p style={{width: 'fit-content'}}>{item.email}</p>
+                          <p style={{width: "fit-content"}}>{item.phone}</p>
+                          <p style={{width: "fit-content"}}>{item.email}</p>
                         </div>
                         <div>
                           {item.website}
                         </div>
                         <div>
                           {item.availableServices.length > 0
-                            ? item.availableServices.map((service, i) => <p key={i} style={{width: 'fit-content', color: 'rgb(0, 0, 0)'}}>{service} </p>) 
+                            ? item.availableServices.map((service, i) => <p key={i} style={{width: "fit-content", color: "rgb(0, 0, 0)"}}>{service} </p>) 
                             : null
                           }
                         </div>

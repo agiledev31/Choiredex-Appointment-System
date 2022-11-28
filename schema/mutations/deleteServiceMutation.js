@@ -1,6 +1,6 @@
 const graphql = require("graphql");
 const ServiceType = require("../types/ServiceType");
-const Service = require("../../models/Service");
+const Service = require("../../models/service");
 const Employee = require("../../models/employee");
 const Notification = require("../../models/notification");
 const { UserInputError } = require("apollo-server");

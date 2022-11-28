@@ -5,8 +5,8 @@ import {
   Button,
 } from "@mui/material";
 import NearMeIcon from "@mui/icons-material/NearMe";
-import ClearIcon from '@mui/icons-material/Clear';
-import { Autocomplete } from '@react-google-maps/api';
+import ClearIcon from "@mui/icons-material/Clear";
+import { Autocomplete } from "@react-google-maps/api";
 
 const InitialPosition = (props) => {
 
@@ -28,13 +28,13 @@ const InitialPosition = (props) => {
   // Geolocation error callback fn. Query permissions to check if the error occured due to user not allowing location to be shared
   const posError = () => {
     if (navigator.permissions) {
-      navigator.permissions.query({ name: 'geolocation' }).then(res => {
-        if (res.state === 'denied') {
-          alert('Enable location permissions for this website in your browser settings.')
+      navigator.permissions.query({ name: "geolocation" }).then(res => {
+        if (res.state === "denied") {
+          alert("Enable location permissions for this website in your browser settings.")
         }
       })
     } else {
-    alert('Unable to access your location. You can continue by submitting location manually.') // Obtaining Lat/long from address necessary
+    alert("Unable to access your location. You can continue by submitting location manually.") // Obtaining Lat/long from address necessary
     }
   }
   // Geolocation success callback fn
@@ -77,7 +77,7 @@ const InitialPosition = (props) => {
     console.log("select position", autocompletebody.getPlace())
 
     } else {
-      console.log('Autocomplete is not loaded yet!')
+      console.log("Autocomplete is not loaded yet!")
     }
   }
   
